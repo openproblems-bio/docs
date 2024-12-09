@@ -1,0 +1,22 @@
+```{mermaid}
+%%| fig-cap: "Overview of a typical benchmarking workflow in an OpenProblems task. *Legend: Grey rectangles are AnnData .h5ad files, purple rhomboids are Viash components.*"
+%%| label: fig-task-workflow
+%%| cap-location: margin
+graph LR
+  common_dataset[Common<br/>dataset]:::anndata
+  subgraph task_specific[OpenProblems task]
+    api[API]
+    dataset_processor[/Dataset<br/>processor/]:::component
+    solution[Solution]:::anndata
+    masked_data[Dataset]:::anndata
+    method[/Method/]:::component
+    control_method[/Control<br/>method/]:::component
+    output[Output]:::anndata
+    metric[/Metric/]:::component
+    score[Score]:::anndata
+  end
+  common_dataset --- dataset_processor --> masked_data & solution
+  masked_data --- method --> output
+  masked_data & solution --- control_method --> output
+  solution & output --- metric --> score
+```

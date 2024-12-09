@@ -16,3 +16,6 @@
 *.rmarkdown
 /.luarc.json
 /tmp
+/_openproblems-v2
+.nextflow*
+work

@@ -1,0 +1,9 @@
+---
+title: Fundamentals
+description: The main philosophy and key concepts of the project.
+order: 10
+listing:
+  template: ../../style/listing.ejs
+  type: default
+  contents: "./*.qmd"
+---
