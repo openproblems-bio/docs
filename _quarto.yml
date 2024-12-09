@@ -1,69 +1,10 @@
-project:
-  type: website
-  resources: 
-    - "_redirects"
-  preview:
-    port: 4200
+project: 
+  output-dir: _docs
 
-website:
-  title: "Open Problems in Single Cell Analysis"
-  description: "Aggregating and Benchmarking Open Problems in Single Cell Analysis"
-  favicon: images/icon.png
-  site-url: https://openproblems.bio
-  repo-url: https://github.com/openproblems-bio/website
-  repo-actions: [edit, issue] 
-  google-analytics: 'UA-178400615-1'
-
-  page-footer:
-    left: "&copy; Open Problems 2023 with all data licensed under [CC-BY](https://creativecommons.org/licenses/by/2.0/)."
-    
-  navbar:
-    logo: images/logo.png
-    title: false
-    left:
-      - href: index.qmd
-        text: About
-      - href: datasets/index.qmd
-        text: Datasets
-      - text: Benchmarks
-        href: results/index.qmd
-      - href: events/index.qmd
-        text: Events
-      - href: team/index.qmd
-        text: Team
-      - text: Documentation
-        href: documentation/index.qmd
-    right:
-      - icon: bi-github
-        href: https://github.com/openproblems-bio
-        aria-label: GitHub
-
-  sidebar:
-    - id: documentation
-      collapse-level: 3
-      title: Documentation
-      contents: documentation
-
-    - id: neurips2021_docs
-      title: NeurIPS2021
-      contents: events/2021-09_neurips/documentation
 format:
-  html:
-    theme:
-      light: [ simplex, style/theme.scss, style/theme-light.scss]
-      dark: [ darkly, style/theme.scss, style/theme-dark.scss ]
-    css: style/styles.css
+  gfm:
     toc: true
-    link-external-newwindow: true
-    link-external-filter: '^(?:http:|https:)\/\/(openproblems\.bio|[^.]*--openproblems\.netlify\.app)'
-    smooth-scroll: true
-    bibliography: library.bib
-    glossary: _glossary.md
-    fig-cap-location: margin
-    tbl-cap-location: margin
-    reference-location: margin
-    citation-location: margin
-    html-math-method: katex
-
+    fig-format: svg
+    extract-media: "images"
 execute:
   freeze: auto
