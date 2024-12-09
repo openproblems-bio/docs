@@ -5,6 +5,5 @@ format:
   gfm:
     toc: true
     fig-format: svg
-    extract-media: "images"
 execute:
   freeze: auto
