@@ -18,7 +18,7 @@ After Updating the task config file (see "[Define task](getting_started.qmd#step
 
 When put together, a typical task API looks somewhat like this:
 
-{{< include /documentation/_figures/_project_structure_task_workflow.qmd >}}
+{{< include /_figures/_project_structure_task_workflow.qmd >}}
 
 The [dimensionality reduction](https://github.com/openproblems-bio/task_dimensionality_reduction/tree/main/src/api) task is an example of an OpenProblems task with this topology, where the output is an embedding of the original dataset, and the solution is cell annotations which are used to verify whether the resulting embedding represents the intended biological information.
 
@@ -248,5 +248,5 @@ Each required or optional slot in the file format should have the following fiel
 Go through each file format specification file and add the expected slots accordingly.
 
 :::{.callout-tip}
-Look at the [Common dataset](/documentation/reference/openproblems/src-datasets.qmd#file-format-common-dataset) reference docs to see which slots the common datasets have. The AnnData file at `resources_test/common/cxg_mouse_pancreas_atlas/dataset.h5ad` is also an example of a Common dataset, though note that this object contains _more_ slots than what is defined by the spec.
+Look at the [Common dataset](/reference/openproblems/src-datasets.qmd#file-format-common-dataset) reference docs to see which slots the common datasets have. The AnnData file at `resources_test/common/cxg_mouse_pancreas_atlas/dataset.h5ad` is also an example of a Common dataset, though note that this object contains _more_ slots than what is defined by the spec.
 :::

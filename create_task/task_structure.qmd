@@ -8,7 +8,7 @@ Before defining a new {{< glossary task >}} in OpenProblems, it's important to u
 
 A task typically consists of a data processors, methods, control methods and metrics. Each component has a well-defined input-output interface, for which the file formats in the resulting AnnData are also described.
 
-{{< include /documentation/_figures/_project_structure_task_workflow.qmd >}}
+{{< include /_figures/_project_structure_task_workflow.qmd >}}
 
 
 ## File and component formats

@@ -9,7 +9,7 @@ In the OpenProblems codebase, the `src` directory contains Viash components that
 
 The main data flow of the pipeline is shown in @fig-dataflow. The common dataset components create common dataset objects which are used in one or more tasks.
 
-{{< include /documentation/_figures/_project_structure_dataflow.qmd >}}
+{{< include /_figures/_project_structure_dataflow.qmd >}}
 
 ## Directory Structure
 

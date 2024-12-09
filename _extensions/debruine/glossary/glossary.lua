@@ -102,7 +102,7 @@ return {
         label = pandoc.utils.stringify(kwargs["label"])
       end
 
-      local url = "/documentation/reference/glossary/index.qmd#" .. term
+      local url = "/reference/glossary/index.qmd#" .. term
       local infoIcon = pandoc.RawInline('html', '<i class="bi bi-question-circle info-icon"></i>')
       local combinedLabel = pandoc.Span({pandoc.Str(label), infoIcon})
       local link = pandoc.Link(combinedLabel, url, "", pandoc.Attr("class", {"quarto-xref"}))

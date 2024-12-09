@@ -6,7 +6,7 @@ Root path: `src/tasks/<task_id>`.
 
 Each task should contain a data processor (to transform common datasets into task-specific datasets), methods, control methods (for quality control), and metrics (@fig-task-workflow).
 
-{{< include /documentation/_figures/_project_structure_task_workflow.qmd >}}
+{{< include /_figures/_project_structure_task_workflow.qmd >}}
 
 - **Process dataset** (`src/process_dataset`): This components processes common components into task-specific dataset objects. In supervised tasks, this component will usually output a solution, a training dataset and a test dataset. In unsupervised tasks, this component usually output a solution and a masked dataset.
 
