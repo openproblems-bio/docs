@@ -1,0 +1,101 @@
+name: Build Docker images
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'base_images/**'
+      - '!base_images/.gitignore'
+      - '!base_images/README*'
+  pull_request:
+    paths:
+      - 'base_images/**'
+      - '!base_images/.gitignore'
+      - '!base_images/README*'
+  schedule:
+    # build daily
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  # phase 1
+  list:
+    runs-on: ubuntu-latest
+
+    outputs:
+      component_matrix: ${{ steps.ns_list.outputs.output_matrix }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            base_images
+          sparse-checkout-cone-mode: false
+
+      - name: setup base images directory
+        run: |
+          mv base_images/* .
+          rm -rf base_images
+
+      - uses: viash-io/viash-actions/setup@v6
+
+      - id: ns_list
+        uses: viash-io/viash-actions/ns-list@v6
+        with:
+          engine: docker
+          format: json
+
+  # phase 2
+  build:
+    needs: list
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        component: ${{ fromJson(needs.list.outputs.component_matrix) }}
+
+    steps:
+      # Remove unnecessary files to free up space.
+      - uses: data-intuitive/reclaim-the-bytes@v2
+
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            base_images
+          sparse-checkout-cone-mode: false
+
+      - name: setup base images directory
+        run: |
+          mv base_images/* .
+          rm -rf base_images
+
+      - uses: viash-io/viash-actions/setup@v6
+          
+      - name: Login to container registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PAT }}
+
+      - name: Build image
+        run: |
+          viash run ${{matrix.component.config}} -- \
+            ---engine docker \
+            ---setup build \
+            ---verbose
+      
+      # only push the image if event is not a pull request
+      - name: Push image
+        if: github.event_name != 'pull_request'
+        run: |
+          viash run ${{matrix.component.config}} -- \
+            ---engine docker \
+            ---setup push \
+            ---verbose

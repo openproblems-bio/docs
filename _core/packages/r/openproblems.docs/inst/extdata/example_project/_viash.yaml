@@ -1,0 +1,40 @@
+viash_version: 0.9.0
+
+name: task_template
+label: Template
+summary: A one sentence summary of purpose and methodology. Used for creating an overview tables.
+description: |
+  Provide a clear and concise description of your task, detailing the specific problem it aims
+  to solve. Outline the input data types, the expected output, and any assumptions or constraints.
+  Be sure to explain any terminology or concepts that are essential for understanding the task.
+
+organization: openproblems-bio
+version: dev
+license: MIT
+keywords: [single-cell, openproblems, benchmark]
+links:
+  issue_tracker: https://github.com/openproblems-bio/task_template/issues
+  repository: https://github.com/openproblems-bio/task_template
+  docker_registry: ghcr.io
+info:
+  image: The name of the image file to use for the component on the website.
+  test_resources:
+    - type: s3
+      path: s3://openproblems-data/resources_test/task_template/
+      dest: resources_test/task_template
+    - type: s3
+      path: s3://openproblems-data/resources_test/common/
+      dest: resources_test/common
+
+authors: 
+  - name: John Doe
+    roles: [ "author", "maintainer" ]
+    info: 
+      github: johndoe
+      orcid: 0000-0000-0000-0000
+      email: john@doe.me
+      twitter: johndoe
+      linkedin: johndoe
+
+config_mods: |
+  .runners[.type == "nextflow"].config.labels := { lowmem : "memory = 20.Gb", midmem : "memory = 50.Gb", highmem : "memory = 100.Gb", lowcpu : "cpus = 5", midcpu : "cpus = 15", highcpu : "cpus = 30", lowtime : "time = 1.h", midtime : "time = 4.h", hightime : "time = 8.h", veryhightime : "time = 24.h" }

@@ -1,0 +1,19 @@
+name: base_pytorch_nvidia
+description: An nvcr.io pytorch 24.06-py3 with anndata preinstalled.
+engines:
+  - type: docker
+    image: nvcr.io/nvidia/pytorch:24.06-py3
+    setup:
+      - type: apt
+        packages:
+          - procps
+          - git
+      - type: python
+        packages:
+          - anndata~=0.10.0
+          - scanpy~=1.10.0
+          - pyyaml
+          - requests
+          - jsonschema
+        github:
+          - openproblems-bio/core#subdirectory=packages/python/openproblems

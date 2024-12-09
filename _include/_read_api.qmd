@@ -1,0 +1,12 @@
+```{r include=FALSE}
+# run this qmd after _clone_repo.qmd
+library(tidyverse)
+library(rlang)
+```
+
+```{r, include=FALSE}
+# interpreted from https://github.com/openproblems-bio/openproblems-v2/blob/b2b4da9fe418587813e8066fb5691dbe07838525/src/label_projection/README.qmd
+source("src/common/helper_functions/read_and_merge_yaml.R")
+source("src/common/helper_functions/strip_margin.R")
+source("src/common/helper_functions/read_api_files.R")
+```

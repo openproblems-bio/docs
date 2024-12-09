@@ -1,0 +1,101 @@
+---
+title: Common commands
+description: A list of common Viash commands to develop and test components.
+order: 60
+engine: knitr
+---
+
+Below is a list of common Viash commands to develop and test components. 
+Check out this [Cheat sheet](/more_information/cheat_sheets.qmd) to get a printable version of the same information. Please visit the [Viash guide](https://viash.io/guide) or [reference documentation](https://viash.io/reference/) for more in-depth information.
+
+:::{.callout-important}
+Most of the common commands are added to a script in the `scripts` directory. You can run these scripts from the root directory of the project. Some scripts might need some additional arguments, which you can find in the script itself.
+:::
+
+## Download test data
+
+This command will download the all of the test resources from the S3 bucket and store them under `resources_test/`.
+
+:::{.small}
+```bash
+scripts/create_datasets/test_resources.sh
+```
+:::
+
+
+## Build all components
+
+Build all components in a namespace.
+
+:::{.small}
+```{.bash filename="scripts/project/build_all_components.sh"}
+viash ns build --parallel
+```
+:::
+
+## Build all docker containers
+
+Build all docker containers.
+
+:::{.small}
+```{.bash filename="scripts/project/build_all_docker_containers.sh"}
+viash ns build --parallel --setup cachedbuild
+```
+:::
+
+## Test a component
+
+Test one component:
+
+:::{.small}
+```bash
+viash test path/to/config.vsh.yaml
+```
+:::
+
+Run all tests in a task:
+
+:::{.small}
+```{.bash filename="scripts/project/test_all_components.sh"}
+viash ns test --parallel
+```
+:::
+
+## Edit script
+
+This command will auto-generate the `VIASH START`--`VIASH END` codeblock in your script:
+
+:::{.small}
+```bash
+viash config inject path/to/config.vsh.yaml
+```
+:::
+
+## Run a component
+
+Display the help text of a component.
+
+:::{.small}
+```bash
+viash run path/to/config.vsh.yaml -- --help
+```
+:::
+
+Run a component with arguments:
+
+:::{.small}
+```bash
+viash run path/to/config.vsh.yaml -- --input dataset.h5ad --output output.h5ad
+```
+:::
+
+
+## View Dockerfile
+
+Use this command to view the component's Dockerfile.
+
+:::{.small}
+```bash
+viash run path/to/config.vsh.yaml -engine docker -- ---dockerfile
+```
+:::

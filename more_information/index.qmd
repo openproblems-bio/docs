@@ -1,0 +1,9 @@
+---
+title: More information
+description: A collection of resources and reference materials designed to help you effectively navigate and contribute to the OpenProblems project.
+order: 40
+listing:
+  template: ../../style/listing.ejs
+  type: default
+  contents: "*.qmd"
+---

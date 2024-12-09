@@ -1,0 +1,138 @@
+---
+title: OpenProblems core packages
+format: gfm
+---
+
+```{r include=FALSE}
+# set wd to tempdir
+knitr::opts_knit$set(root.dir = tempdir())
+```
+
+This repository provides OpenProblems core helper packages in R and Python.
+
+## Installation
+
+You can install the Python package with pip:
+
+```bash
+pip install "git+https://github.com/openproblems-bio/core#subdirectory=packages/python/openproblems"
+```
+
+You can install the R package with devtools:
+
+```r
+devtools::install_github("openproblems-bio/core/packages/r/openproblems")
+```
+
+
+## Install in a Viash component
+
+For Python components:
+
+```yaml
+engines:
+  - type: docker
+    image: python:3.10
+    setup:
+      - type: apt
+        packages: git
+      - type: python
+        github: openproblems-bio/core#subdirectory=packages/python/openproblems
+```
+
+For R components:
+
+```yaml
+engines:
+  - type: docker
+    image: rocker/r2u:22.04
+    setup:
+      - type: r
+        github: openproblems-bio/core/packages/r/openproblems
+```
+
+## Example usage
+
+```{bash}
+git clone https://github.com/openproblems-bio/task_perturbation_prediction
+```
+
+### Python
+
+```{python}
+import openproblems
+```
+
+#### Find project root
+
+```{python}
+path = "task_perturbation_prediction/src/api/comp_method.yaml"
+
+openproblems.project.find_project_root(path)
+```
+
+### Read nested yaml
+
+```{python}
+comp_method = openproblems.io.read_nested_yaml(path)
+```
+
+<details><summary>Contents of `comp_method`</summary>
+
+```yaml
+```{python echo=FALSE, output="asis"}
+import yaml
+
+print(yaml.dump(comp_method))
+```
+```
+
+</details>
+
+### Strip margin
+
+```{python}
+print(openproblems.utils.strip_margin("""
+  |this_is:
+  |  a_yaml: 'test'
+  |"""))
+```
+
+### R
+
+```{r}
+library(openproblems)
+```
+
+#### Find project root
+
+```{r}
+path <- "task_perturbation_prediction/src/api/comp_method.yaml"
+
+openproblems::find_project_root(path)
+```
+
+### Read nested yaml
+
+```{r}
+comp_method <- openproblems::read_nested_yaml(path)
+```
+
+<details><summary>Contents of `comp_method`</summary>
+
+```yaml
+```{r echo=FALSE, output="asis"}
+cat(yaml::as.yaml(comp_method))
+```
+```
+
+</details>
+
+### Strip margin
+
+```{r}
+cat(openproblems::strip_margin("
+  |this_is:
+  |  a_yaml: 'test'
+  |"))
+```

@@ -1,0 +1,13 @@
+name: Check Viash components
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    uses: viash-io/viash-actions/.github/workflows/test.yaml@v6
+    with:
+      project_directory: viash/core
