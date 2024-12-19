@@ -2,7 +2,7 @@ on:
   push:
     branches: [main]
 
-name: Render porject
+name: Render project
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
