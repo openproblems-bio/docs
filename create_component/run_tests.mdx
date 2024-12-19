@@ -1,0 +1,264 @@
+---
+title: Run tests
+description: Run unit tests for a component
+order: 70
+engine: knitr
+page-navigation: true
+---
+
+
+
+export const quartoRawHtml =
+[`<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function() {
+  // Find all divs with the class 'details'
+  const detailsDivs = document.querySelectorAll(".output-details");
+  // Iterate through each div with class 'details'
+  detailsDivs.forEach(detailsDiv => {
+    // Create a new 'details' element
+    const detailsElement = document.createElement("details");
+    // Create a new 'summary' element
+    const summaryElement = document.createElement("summary");
+    summaryElement.innerText = "Output";
+    // Append the 'summary' element to the 'details' element
+    detailsElement.appendChild(summaryElement);
+    // Move the content of the 'details' div into the new 'details' element
+    while (detailsDiv) {
+      detailsElement.appendChild(detailsDiv.parentElement);
+    }
+    // Replace the 'details' div with the new 'details' element
+    detailsDiv.parentNode.replaceChild(detailsElement, detailsDiv);
+  });
+});
+</script>`,`<details>`,`<summary>`,`</summary>`,`</details>`,`<details>`,`<summary>`,`</summary>`,`</details>`];
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[0] }} />
+
+A component in OpenProblems will typically come with at least two unit
+tests out of the box:
+
+-   The first test will check if the config file has all the required
+    fields.
+-   The second test will generally test if your component works and if
+    the output has the expected dimensions and fields.
+
+Use `viash test` to run all of the component’s unit tests.
+
+## Example
+
+```bash
+viash test src/methods/logistic_regression/config.vsh.yaml
+```
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[1] }} />
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[2] }} />
+
+Output
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[3] }} />
+
+``` text
+Running tests in temporary directory: '/tmp/viash_test_logistic_regression_11525918844436953442'
+====================================================================
++/tmp/viash_test_logistic_regression_11525918844436953442/build_engine_environment/logistic_regression ---verbosity 6 ---setup cachedbuild ---engine docker
+[notice] Building container 'ghcr.io/openproblems-bio/task_template/methods/logistic_regression:test' with Dockerfile
+[info] docker build -t 'ghcr.io/openproblems-bio/task_template/methods/logistic_regression:test'  '/tmp/viash_test_logistic_regression_11525918844436953442/build_engine_environment' -f '/tmp/viash_test_logistic_regression_11525918844436953442/build_engine_environment/tmp/dockerbuild-logistic_regression-FCpSoM/Dockerfile'
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 571B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/openproblems/base_python:1.0.0
+#2 DONE 0.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/2] FROM docker.io/openproblems/base_python:1.0.0@sha256:8f412fb68458fe21f891eee39cc7c92862f3a72542abb3d760d5d3b8585808b6
+#4 DONE 0.0s
+
+#5 [2/2] RUN pip install --upgrade pip &&   pip install --upgrade --no-cache-dir "scikit-learn"
+#5 CACHED
+
+#6 exporting to image
+#6 exporting layers done
+#6 writing image sha256:e936c69b76bcb0a86334d377f8ae49cbb53e15cec4703d4d5f7ae47ca5151c01 done
+#6 naming to ghcr.io/openproblems-bio/task_template/methods/logistic_regression:test done
+#6 DONE 0.0s
+====================================================================
++/tmp/viash_test_logistic_regression_11525918844436953442/test_run_and_check_output/test_executable
+>> Running test 'run'
+>> Checking whether input files exist
+>> Running script as test
+Reading input files
+Preprocess data
+Train model
+Generate predictions
+Write output AnnData to file
+>> Checking whether output file exists
+>> Reading h5ad files and checking formats
+Reading and checking output
+  AnnData object with n_obs × n_vars = 123 × 0
+    obs: 'label_pred'
+    uns: 'dataset_id', 'method_id', 'normalization_id'
+All checks succeeded!
+====================================================================
++/tmp/viash_test_logistic_regression_11525918844436953442/test_check_config/test_executable
+Load config data
+Check .namespace
+Check .info.type
+Check component metadata
+Check references fields
+Checking contents of .info.preferred_normalization
+Check Nextflow runner
+All checks succeeded!
+====================================================================
+SUCCESS! All 2 out of 2 test scripts succeeded!
+Cleaning up temporary directory
+```
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[4] }} />
+
+### Test multiple components
+
+Use `viash ns test` to unit test all of the components of a given task.
+
+```bash
+viash ns test --parallel
+```
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[5] }} />
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[6] }} />
+
+Output
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[7] }} />
+
+``` text
+        namespace                 name               runner               engine            test_name exit_code duration               result
+    control_methods          true_labels           executable               docker                start                                        
+    control_methods          true_labels           executable               docker     build_executable         0        1              SUCCESS
+    control_methods          true_labels           executable               docker run_and_check_output.py         0        3              SUCCESS
+    control_methods          true_labels           executable               docker      check_config.py         0        3              SUCCESS
+    data_processors      process_dataset           executable               docker                start                                        
+    data_processors      process_dataset           executable               docker     build_executable         0        1              SUCCESS
+    data_processors      process_dataset           executable               docker run_and_check_output.py         0        3              SUCCESS
+            methods  logistic_regression           executable               docker                start                                        
+            methods  logistic_regression           executable               docker     build_executable         0        1              SUCCESS
+            methods  logistic_regression           executable               docker run_and_check_output.py         0        3              SUCCESS
+            methods  logistic_regression           executable               docker      check_config.py         0        3              SUCCESS
+            metrics             accuracy           executable               docker                start                                        
+            metrics             accuracy           executable               docker     build_executable         0        1              SUCCESS
+            metrics             accuracy           executable               docker run_and_check_output.py         0        3              SUCCESS
+            metrics             accuracy           executable               docker      check_config.py         0        3              SUCCESS
+All 11 configs built and tested successfully
+```
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[8] }} />
+
+## Common errors
+
+Below is a listing of common errors and how to solve them. If you come
+across any other problems, please take a look at our
+[troubleshooting](../more_information/troubleshooting.qmd) page, or
+reach out via [GitHub
+issues](https://github.com/openproblems-bio/openproblems/issues).
+
+### Assertion error
+
+An assertion error typically occurs when data format of input or output
+parameters is incorrect.
+
+Component script errors:
+
+-   Output file cannot be found: Check that your script writes to the
+    correct output filename.
+
+-   Some fields/objects cannot be found in the output file: Check
+    whether the correct fields are written in the output file.
+
+```bash
++/tmp/viash_test_knn12471306149427017048/test_generic_test/test_executable
+>> Running script as test
+>> Checking whether output file exists
+>> Reading h5ad files
+>> Checking whether predictions were added
+Traceback (most recent call last):
+  File "/viash_automount/tmp/viash_test_knn12471306149427017048/test_generic_test/tmp//viash-run-knn-QTKmUM.py", line 57, in <module>
+    assert "label_predi" in output.obs
+AssertionError
+```
+
+Component config errors:
+
+When these `AssertionErrors` occur, check the spelling of the missing
+value if it is present in the file. If the field is irrelevant you can
+simply add an empty string `""` to make sure it is included in the
+composed config file.
+
+```bash
++/tmp/viash_test_knn12945373156205296243/test_check_method_config/test_executable
+Load config data
+check general fields
+Traceback (most recent call last):
+Check info fields
+  File "/viash_automount/tmp/viash_test_knn12945373156205296243/test_check_method_config/tmp//viash-run-knn-Xn2Vd7.py", line 42, in <module>
+    assert "summary" in info is not None, "summary not an info field or is empty"
+AssertionError: summary not an info field or is empty
+```
+
+### Python / R dependency does not exist {#python-r-dependency-does-not-exist}
+
+When a dependency for the unit test or the executed script is not added
+to the setup of the docker you will get a `ModuleNotFoundError`. [Add
+the dependency](add_a_method.qmd#step-3-add-dependencies) to the setup.
+
+```bash
+ModuleNotFoundError: No module named 'yaml'
+```
+
+### Docker image not found
+
+When this kind of error occurs make sure there are no spelling mistakes
+in the image name.
+
+```bash
+#3 ERROR: docker.io/library/python:3.1: not found
+------
+> [internal] load metadata for docker.io/library/python:3.1:
+------
+Dockerfile:1
+--------------------
+  1 | >>> FROM python:3.1
+  2 |     
+  3 |     RUN pip install --upgrade pip && \
+--------------------
+ERROR: failed to solve: python:3.1: docker.io/library/python:3.1: not found
+[error] Error occurred while building container 'ghcr.io/openproblems-bio/label_projection/methods/knn:test'
+ERROR! Setup failed!
+```
+
+### Script error
+
+When the executed script has an error it will be printed out like the
+example below. In most cases you can find the problem in the stack
+trace.
+
+```bash
++/tmp/viash_test_knn14797416935521308344/test_generic_test/test_executable
+>> Running script as test
+Load input data
+Traceback (most recent call last):
+File "/tmp/viash-run-knn-p4pvkA.py", line 31, in <module>
+  input_test = ad.read_h5ad(par['input_test'])
+File "/usr/local/lib/python3.10/site-packages/anndata/_io/h5ad.py", line 224, in read_h5ad
+  with h5py.File(filename, "r") as f:
+File "/usr/local/lib/python3.10/site-packages/h5py/_hl/files.py", line 542, in __init__
+  name = filename_encode(name)
+File "/usr/local/lib/python3.10/site-packages/h5py/_hl/compat.py", line 19, in filename_encode
+  filename = fspath(filename)
+TypeError: expected str, bytes or os.PathLike object, not NoneType
+Method script with returncode ...
+```

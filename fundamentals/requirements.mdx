@@ -1,0 +1,584 @@
+---
+title: Requirements
+description: A list of required software to start contributing to OpenProblems
+order: 20
+engine: knitr
+---
+
+
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+export const quartoRawHtml =
+[`<details>`,`<summary>`,`</summary>`,`</details>`,`<details>`,`<summary>`,`</summary>`,`</details>`,`<details>`,`<summary>`,`</summary>`,`</details>`,`<details>`,`<summary>`,`</summary>`,`</details>`];
+
+To start contributing to OpenProblems, you need to have the following
+software installed:
+
+-   Bash (\>= 3.2)
+-   Java Development Kit (\>= 11)
+-   Docker
+-   Viash (\>= 0.9.0)
+-   Nextflow (\>= 21.04)
+
+The following sections provide instructions on how to install each of
+these tools. If you already have all of these tools installed, feel free
+to skip this boring page and go to the respective page on what you want
+to do either [Create component](../create_component/index.qmd) or
+[Create a new task](../create_task/index.qmd).
+
+## Step 1: install Bash
+
+<Tabs groupId="os">
+<TabItem value="Debian/Ubuntu">
+
+Bash is already included in most Debian- and Ubuntu-based distributions.
+However, if for some reason it’s not installed, open a terminal and run
+the following commands:
+
+```bash
+sudo apt-get update
+sudo apt-get install bash
+```
+
+</TabItem>
+<TabItem value="RHEL/Fedora">
+
+Bash is already included in most RHEL- and Fedora-based distributions.
+However, if for some reason it’s not installed, open a terminal and run
+the following commands:
+
+```bash
+sudo yum install bash
+```
+
+</TabItem>
+<TabItem value="Arch">
+
+Bash is already included in most Arch-based distributions. However, if
+for some reason it’s not installed, open a terminal and run the
+following commands:
+
+```bash
+sudo pacman -S bash
+```
+
+</TabItem>
+<TabItem value="macOS">
+
+Bash is already included in macOS.
+
+</TabItem>
+<TabItem value="Windows">
+
+You will need to install Ubuntu using Windows Subsystem for Linux (WSL).
+
+Open **PowerShell** or **Windows Command Prompt** in administrator mode
+by right-clicking and selecting “Run as administrator”. Enter the
+following command to enable the features necessary to run WSL and
+install the Ubuntu distribution of Linux.
+
+```powershell
+wsl --install
+```
+
+After rebooting the system, open **Ubuntu** by visiting the Windows
+Start menu or by entering the `ubuntu` command in PowerShell or Windows
+Command Prompt. Since Bash is already included in Ubuntu, no further
+actions are needed.
+
+*Content adapted from the [WSL installation
+instructions](https://learn.microsoft.com/en-us/windows/wsl/install)*
+
+</TabItem>
+</Tabs>
+
+Verify that you have Bash version 3.2 or higher.
+
+```bash
+bash --version
+```
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[0] }} />
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[1] }} />
+
+Output
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[2] }} />
+
+``` text
+GNU bash, version 5.2.21(1)-release (x86_64-pc-linux-gnu)
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+
+This is free software; you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+```
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[3] }} />
+
+## Step 2: install Java
+
+You will need Oracle Java \>=11 or OpenJDK \>=11 to be installed.
+
+<Tabs groupId="os">
+<TabItem value="Debian/Ubuntu">
+
+Run the following commands:
+
+```bash
+sudo apt-get update
+sudo apt-get install openjdk-11-jdk
+```
+
+</TabItem>
+<TabItem value="RHEL/Fedora">
+
+Run the following command:
+
+```bash
+sudo yum install java-11-openjdk-devel
+```
+
+</TabItem>
+<TabItem value="Arch">
+
+Run the following command:
+
+```bash
+sudo pacman -S jdk11-openjdk
+```
+
+</TabItem>
+<TabItem value="macOS">
+
+If haven’t done so already, first install Homebrew:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+```
+
+Next, install Java 11 by running:
+
+```bash
+brew install openjdk@11
+```
+
+</TabItem>
+<TabItem value="Windows">
+
+Open Ubuntu in WSL and run the following commands:
+
+```bash
+sudo apt-get update
+sudo apt-get install openjdk-11-jdk
+```
+
+</TabItem>
+</Tabs>
+
+Verify that you have Java version 11 or higher.
+
+```bash
+java -version
+```
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[4] }} />
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[5] }} />
+
+Output
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[6] }} />
+
+``` text
+openjdk 17.0.13 2024-10-15
+OpenJDK Runtime Environment Temurin-17.0.13+11 (build 17.0.13+11)
+OpenJDK 64-Bit Server VM Temurin-17.0.13+11 (build 17.0.13+11, mixed mode, sharing)
+```
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[7] }} />
+
+## Step 3: install Docker
+
+<Tabs groupId="os">
+<TabItem value="Debian/Ubuntu">
+
+Update package index by running:
+
+```bash
+sudo apt update
+```
+
+Install Docker by running:
+
+```bash
+sudo apt install docker.io
+```
+
+Enable the Docker service automatically at boot by running:
+
+```bash
+sudo systemctl enable docker
+```
+
+Add the current user to the Docker group by running:
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+</TabItem>
+<TabItem value="RHEL/Fedora">
+
+On RHEL, run the following commands:
+
+```bash
+sudo yum install -y yum-utils
+sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/rhel/docker-ce.repo
+sudo yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+```
+
+On Fedora, run the following commands:
+
+```bash
+sudo dnf -y install dnf-plugins-core
+sudo dnf config-manager \
+    --add-repo \
+    https://download.docker.com/linux/fedora/docker-ce.repo
+sudo dnf install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+```
+
+Enable the Docker service automatically at boot by running:
+
+```bash
+sudo systemctl enable docker
+```
+
+Add the current user to the Docker group by running:
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+</TabItem>
+<TabItem value="Arch">
+
+Install Docker by running:
+
+```bash
+sudo pacman -S docker
+```
+
+Enable the Docker service automatically at boot by running:
+
+```bash
+sudo systemctl enable docker
+```
+
+Add the current user to the Docker group by running:
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+</TabItem>
+<TabItem value="macOS">
+
+Download and install [Docker Desktop for Mac](https://www.docker.com)
+and download Docker Desktop for Mac.
+
+</TabItem>
+<TabItem value="Windows">
+
+Open Ubuntu in WSL and follow the following instructions.
+
+Update package index by running:
+
+```bash
+sudo apt update
+```
+
+Install Docker by running:
+
+```bash
+sudo apt install docker.io
+```
+
+Enable the Docker service automatically at boot by running:
+
+```bash
+sudo systemctl enable docker
+```
+
+Add the current user to the Docker group by running:
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+</TabItem>
+</Tabs>
+
+Verify that Docker is working by running:
+
+```bash
+docker run hello-world
+```
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[8] }} />
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[9] }} />
+
+Output
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[10] }} />
+
+``` text
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+c1ec31eb5944: Pulling fs layer
+c1ec31eb5944: Download complete
+c1ec31eb5944: Pull complete
+Digest: sha256:5b3cc85e16e3058003c13b7821318369dad01dac3dbb877aac3c28182255c724
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+```
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[11] }} />
+
+## Step 4: install Viash
+
+<Tabs groupId="os">
+<TabItem value="Debian/Ubuntu">
+
+Install Viash by running:
+
+```bash
+curl -fsSL dl.viash.io | bash
+
+mkdir -p "$HOME/.local/bin"
+
+mv viash "$HOME/.local/bin"
+```
+
+Tip: Make sure that the `$HOME/.local/bin` folder is in your `$PATH`
+variable.
+
+</TabItem>
+<TabItem value="RHEL/Fedora">
+
+Install Viash by running:
+
+```bash
+curl -fsSL dl.viash.io | bash
+
+mkdir -p "$HOME/.local/bin"
+
+mv viash "$HOME/.local/bin"
+```
+
+Tip: Make sure that the `$HOME/.local/bin` folder is in your `$PATH`
+variable.
+
+</TabItem>
+<TabItem value="Arch">
+
+Install Viash by running:
+
+```bash
+curl -fsSL dl.viash.io | bash
+
+mkdir -p "$HOME/.local/bin"
+
+mv viash "$HOME/.local/bin"
+```
+
+Tip: Make sure that the `$HOME/.local/bin` folder is in your `$PATH`
+variable.
+
+</TabItem>
+<TabItem value="macOS">
+
+Install Viash by running:
+
+```bash
+curl -fsSL dl.viash.io | bash
+
+mkdir -p "$HOME/.local/bin"
+
+mv viash "$HOME/.local/bin"
+```
+
+Tip: Make sure that the `$HOME/.local/bin` folder is in your `$PATH`
+variable.
+
+</TabItem>
+<TabItem value="Windows">
+
+Install Viash in Ubuntu by running:
+
+```bash
+curl -fsSL dl.viash.io | bash
+
+mkdir -p "$HOME/.local/bin"
+
+mv viash "$HOME/.local/bin"
+```
+
+Tip: Make sure that the `$HOME/.local/bin` folder is in your `$PATH`
+variable.
+
+</TabItem>
+</Tabs>
+
+Verify that you have Viash version 0.6.7 or higher.
+
+```bash
+viash -v
+```
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[12] }} />
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[13] }} />
+
+Output
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[14] }} />
+
+``` text
+viash 0.9.1 (c) 2020 Data Intuitive
+```
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[15] }} />
+
+## Step 5: install Nextflow
+
+<Tabs groupId="os">
+<TabItem value="Debian/Ubuntu">
+
+Install Nextflow by running:
+
+```bash
+curl -s https://get.nextflow.io | bash
+
+mkdir -p "$HOME/.local/bin"
+
+mv nextflow "$HOME/.local/bin"
+```
+
+</TabItem>
+<TabItem value="RHEL/Fedora">
+
+Install Nextflow by running:
+
+```bash
+curl -s https://get.nextflow.io | bash
+
+mkdir -p "$HOME/.local/bin"
+
+mv nextflow "$HOME/.local/bin"
+```
+
+</TabItem>
+<TabItem value="Arch">
+
+Install Nextflow by running:
+
+```bash
+curl -s https://get.nextflow.io | bash
+
+mkdir -p "$HOME/.local/bin"
+
+mv nextflow "$HOME/.local/bin"
+```
+
+</TabItem>
+<TabItem value="macOS">
+
+Install Nextflow by running:
+
+```bash
+curl -s https://get.nextflow.io | bash
+
+mkdir -p "$HOME/.local/bin"
+
+mv nextflow "$HOME/.local/bin"
+```
+
+</TabItem>
+<TabItem value="Windows">
+
+Install Nextflow by running:
+
+```bash
+curl -s https://get.nextflow.io | bash
+
+mkdir -p "$HOME/.local/bin"
+
+mv nextflow "$HOME/.local/bin"
+```
+
+</TabItem>
+</Tabs>
+
+Verify that Nextflow and Docker are working by running:
+
+```bash
+nextflow run hello -with-docker
+```
+
+``` text
+N E X T F L O W  $HOME  version 22.10.4
+Launching `https://github.com/nextflow-io/hello` [compassionate_keller] DSL2 - revision: 4eab81bd42 [master]
+executor >  local (4)
+[d5/78e7a6] process > sayHello (2) [100%] 4 of 4 ✔
+Bonjour world!
+Hello world!
+Hola world!
+Ciao world!
+```
+
+## Optional: install VS Code
+
+It is recommended to install and use VS Code as this will help with the
+development of components due to the use of extensions and YAML schemas.
+
+VS code can be downloaded from [this
+page](https://code.visualstudio.com/Download).
+
+There are installers available for all major operating systems, so
+simply download and install the version for your system.
+
+#### YAML extension (recommended)
+
+This extension provides YAML validation, syntax highlighting, auto
+completion and document outlining for YAML. A must have for writing and
+editing Viash config files!
+
+The OpenProblems repo has schemas that help with writing the API and
+Viash config files. The extension auto detects these schemas.
+
+You can find more recommended extensions for developing with Viash by
+visiting following
+[link](https://viash.io/guide/project/ide-setup.html).

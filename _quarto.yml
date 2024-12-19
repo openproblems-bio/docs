@@ -1,9 +1,0 @@
-project: 
-  output-dir: _docs
-
-format:
-  gfm:
-    toc: true
-    fig-format: svg
-execute:
-  freeze: auto

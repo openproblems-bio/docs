@@ -1,0 +1,1106 @@
+---
+title: Dataset workflows
+engine: knitr
+---
+
+
+
+export const quartoRawHtml =
+[`
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 8%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>--output</code></td>
+<td style="text-align: left;"><code>file</code></td>
+<td style="text-align: left;">(<em>Output</em>) An unprocessed dataset as output by a dataset loader.</td>
+</tr>
+</tbody>
+</table>
+`,`
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 1%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Slot</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["dataset_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Identifier for the dataset from which the cell data is derived, useful for tracking and referencing purposes.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["assay"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Type of assay used to generate the cell data, indicating the methodology or technique employed.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["assay_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Experimental Factor Ontology (<code>EFO:</code>) term identifier for the assay, providing a standardized reference to the assay type.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["cell_type"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Classification of the cell type based on its characteristics and function within the tissue or organism.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["cell_type_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Cell Ontology (<code>CL:</code>) term identifier for the cell type, offering a standardized reference to the specific cell classification.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["development_stage"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Stage of development of the organism or tissue from which the cell is derived, indicating its maturity or developmental phase.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["development_stage_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the developmental stage, providing a standardized reference to the organism’s developmental phase. If the organism is human (<code>organism_ontology_term_id == 'NCBITaxon:9606'</code>), then the Human Developmental Stages (<code>HsapDv:</code>) ontology is used. If the organism is mouse (<code>organism_ontology_term_id == 'NCBITaxon:10090'</code>), then the Mouse Developmental Stages (<code>MmusDv:</code>) ontology is used. Otherwise, the Uberon (<code>UBERON:</code>) ontology is used.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["disease"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Information on any disease or pathological condition associated with the cell or donor.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["disease_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the disease, enabling standardized disease classification and referencing. Must be a term from the Mondo Disease Ontology (<code>MONDO:</code>) ontology term, or <code>PATO:0000461</code> from the Phenotype And Trait Ontology (<code>PATO:</code>).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["donor_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Identifier for the donor from whom the cell sample is obtained.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["is_primary_data"]</code></td>
+<td style="text-align: left;"><code>boolean</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Indicates whether the data is primary (directly obtained from experiments) or has been computationally derived from other primary data.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["organism"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Organism from which the cell sample is obtained.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["organism_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the organism, providing a standardized reference for the organism. Must be a term from the NCBI Taxonomy Ontology (<code>NCBITaxon:</code>) which is a child of <code>NCBITaxon:33208</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["self_reported_ethnicity"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ethnicity of the donor as self-reported, relevant for studies considering genetic diversity and population-specific traits.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["self_reported_ethnicity_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the self-reported ethnicity, providing a standardized reference for ethnic classifications. If the organism is human (<code>organism_ontology_term_id == 'NCBITaxon:9606'</code>), then the Human Ancestry Ontology (<code>HANCESTRO:</code>) is used.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["sex"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Biological sex of the donor or source organism, crucial for studies involving sex-specific traits or conditions.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["sex_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the biological sex, ensuring standardized classification of sex. Only <code>PATO:0000383</code>, <code>PATO:0000384</code> and <code>PATO:0001340</code> are allowed.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["suspension_type"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Type of suspension or medium in which the cells were stored or processed, important for understanding cell handling and conditions.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["tissue"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Specific tissue from which the cells were derived, key for context and specificity in cell studies.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["tissue_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the tissue, providing a standardized reference for the tissue type. For organoid or tissue samples, the Uber-anatomy ontology (<code>UBERON:</code>) is used. The term ids must be a child term of <code>UBERON:0001062</code> (anatomical entity). For cell cultures, the Cell Ontology (<code>CL:</code>) is used. The term ids cannot be <code>CL:0000255</code>, <code>CL:0000257</code> or <code>CL:0000548</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["tissue_general"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) General category or classification of the tissue, useful for broader grouping and comparison of cell data.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["tissue_general_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the general tissue category, aiding in standardizing and grouping tissue types. For organoid or tissue samples, the Uber-anatomy ontology (<code>UBERON:</code>) is used. The term ids must be a child term of <code>UBERON:0001062</code> (anatomical entity). For cell cultures, the Cell Ontology (<code>CL:</code>) is used. The term ids cannot be <code>CL:0000255</code>, <code>CL:0000257</code> or <code>CL:0000548</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["batch"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) A batch identifier. This label is very context-dependent and may be a combination of the tissue, assay, donor, etc.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["soma_joinid"]</code></td>
+<td style="text-align: left;"><code>integer</code></td>
+<td style="text-align: left;">(<em>Optional</em>) If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the cell.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>var["feature_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Unique identifier for the feature, usually a ENSEMBL gene id.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>var["feature_name"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">A human-readable name for the feature, usually a gene symbol.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>var["soma_joinid"]</code></td>
+<td style="text-align: left;"><code>integer</code></td>
+<td style="text-align: left;">(<em>Optional</em>) If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>layers["counts"]</code></td>
+<td style="text-align: left;"><code>integer</code></td>
+<td style="text-align: left;">Raw counts.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uns["dataset_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">A unique identifier for the dataset. This is different from the <code>obs.dataset_id</code> field, which is the identifier for the dataset from which the cell data is derived.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uns["dataset_name"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">A human-readable name for the dataset.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uns["dataset_url"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Link to the original source of the dataset.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uns["dataset_reference"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Bibtex reference of the paper in which the dataset was published.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uns["dataset_summary"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">Short description of the dataset.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uns["dataset_description"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">Long description of the dataset.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uns["dataset_organism"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) The organism of the sample in the dataset.</td>
+</tr>
+</tbody>
+</table>
+`,`
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 5%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>--input</code></td>
+<td style="text-align: left;"><code>file</code></td>
+<td style="text-align: left;">An unprocessed dataset as output by a dataset loader.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>--output</code></td>
+<td style="text-align: left;"><code>file</code></td>
+<td style="text-align: left;">(<em>Output</em>) A normalized dataset.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>--normalization_id</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) The normalization id to store in the dataset metadata. If not specified, the functionality name will be used.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>--layer_output</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) The name of the layer in which to store the normalized data. Default: <code>normalized</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>--obs_size_factors</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) In which .obs slot to store the size factors (if any). Default: <code>size_factors</code>.</td>
+</tr>
+</tbody>
+</table>
+`,`
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 1%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Slot</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["dataset_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Identifier for the dataset from which the cell data is derived, useful for tracking and referencing purposes.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["assay"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Type of assay used to generate the cell data, indicating the methodology or technique employed.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["assay_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Experimental Factor Ontology (<code>EFO:</code>) term identifier for the assay, providing a standardized reference to the assay type.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["cell_type"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Classification of the cell type based on its characteristics and function within the tissue or organism.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["cell_type_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Cell Ontology (<code>CL:</code>) term identifier for the cell type, offering a standardized reference to the specific cell classification.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["development_stage"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Stage of development of the organism or tissue from which the cell is derived, indicating its maturity or developmental phase.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["development_stage_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the developmental stage, providing a standardized reference to the organism’s developmental phase. If the organism is human (<code>organism_ontology_term_id == 'NCBITaxon:9606'</code>), then the Human Developmental Stages (<code>HsapDv:</code>) ontology is used. If the organism is mouse (<code>organism_ontology_term_id == 'NCBITaxon:10090'</code>), then the Mouse Developmental Stages (<code>MmusDv:</code>) ontology is used. Otherwise, the Uberon (<code>UBERON:</code>) ontology is used.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["disease"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Information on any disease or pathological condition associated with the cell or donor.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["disease_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the disease, enabling standardized disease classification and referencing. Must be a term from the Mondo Disease Ontology (<code>MONDO:</code>) ontology term, or <code>PATO:0000461</code> from the Phenotype And Trait Ontology (<code>PATO:</code>).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["donor_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Identifier for the donor from whom the cell sample is obtained.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["is_primary_data"]</code></td>
+<td style="text-align: left;"><code>boolean</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Indicates whether the data is primary (directly obtained from experiments) or has been computationally derived from other primary data.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["organism"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Organism from which the cell sample is obtained.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["organism_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the organism, providing a standardized reference for the organism. Must be a term from the NCBI Taxonomy Ontology (<code>NCBITaxon:</code>) which is a child of <code>NCBITaxon:33208</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["self_reported_ethnicity"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ethnicity of the donor as self-reported, relevant for studies considering genetic diversity and population-specific traits.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["self_reported_ethnicity_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the self-reported ethnicity, providing a standardized reference for ethnic classifications. If the organism is human (<code>organism_ontology_term_id == 'NCBITaxon:9606'</code>), then the Human Ancestry Ontology (<code>HANCESTRO:</code>) is used.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["sex"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Biological sex of the donor or source organism, crucial for studies involving sex-specific traits or conditions.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["sex_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the biological sex, ensuring standardized classification of sex. Only <code>PATO:0000383</code>, <code>PATO:0000384</code> and <code>PATO:0001340</code> are allowed.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["suspension_type"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Type of suspension or medium in which the cells were stored or processed, important for understanding cell handling and conditions.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["tissue"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Specific tissue from which the cells were derived, key for context and specificity in cell studies.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["tissue_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the tissue, providing a standardized reference for the tissue type. For organoid or tissue samples, the Uber-anatomy ontology (<code>UBERON:</code>) is used. The term ids must be a child term of <code>UBERON:0001062</code> (anatomical entity). For cell cultures, the Cell Ontology (<code>CL:</code>) is used. The term ids cannot be <code>CL:0000255</code>, <code>CL:0000257</code> or <code>CL:0000548</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["tissue_general"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) General category or classification of the tissue, useful for broader grouping and comparison of cell data.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["tissue_general_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the general tissue category, aiding in standardizing and grouping tissue types. For organoid or tissue samples, the Uber-anatomy ontology (<code>UBERON:</code>) is used. The term ids must be a child term of <code>UBERON:0001062</code> (anatomical entity). For cell cultures, the Cell Ontology (<code>CL:</code>) is used. The term ids cannot be <code>CL:0000255</code>, <code>CL:0000257</code> or <code>CL:0000548</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["batch"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) A batch identifier. This label is very context-dependent and may be a combination of the tissue, assay, donor, etc.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["soma_joinid"]</code></td>
+<td style="text-align: left;"><code>integer</code></td>
+<td style="text-align: left;">(<em>Optional</em>) If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the cell.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["size_factors"]</code></td>
+<td style="text-align: left;"><code>double</code></td>
+<td style="text-align: left;">(<em>Optional</em>) The size factors created by the normalisation method, if any.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>var["feature_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Unique identifier for the feature, usually a ENSEMBL gene id.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>var["feature_name"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">A human-readable name for the feature, usually a gene symbol.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>var["soma_joinid"]</code></td>
+<td style="text-align: left;"><code>integer</code></td>
+<td style="text-align: left;">(<em>Optional</em>) If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>layers["counts"]</code></td>
+<td style="text-align: left;"><code>integer</code></td>
+<td style="text-align: left;">Raw counts.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>layers["normalized"]</code></td>
+<td style="text-align: left;"><code>double</code></td>
+<td style="text-align: left;">Normalised expression values.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uns["dataset_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">A unique identifier for the dataset. This is different from the <code>obs.dataset_id</code> field, which is the identifier for the dataset from which the cell data is derived.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uns["dataset_name"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">A human-readable name for the dataset.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uns["dataset_url"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Link to the original source of the dataset.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uns["dataset_reference"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Bibtex reference of the paper in which the dataset was published.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uns["dataset_summary"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">Short description of the dataset.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uns["dataset_description"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">Long description of the dataset.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uns["dataset_organism"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) The organism of the sample in the dataset.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uns["normalization_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">Which normalization was used.</td>
+</tr>
+</tbody>
+</table>
+`,`
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 6%" />
+<col style="width: 79%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>--input</code></td>
+<td style="text-align: left;"><code>file</code></td>
+<td style="text-align: left;">A normalised dataset with a PCA embedding and HVG selection.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>--input_layer</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Which layer to use as input. Default: <code>normalized</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>--input_var_features</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Column name in .var matrix that will be used to select which genes to run the PCA on. Default: <code>hvg</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>--output</code></td>
+<td style="text-align: left;"><code>file</code></td>
+<td style="text-align: left;">(<em>Output</em>) A normalised dataset with a PCA embedding.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>--obsm_embedding</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) In which .obsm slot to store the resulting embedding. Default: <code>X_pca</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>--varm_loadings</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) In which .varm slot to store the resulting loadings matrix. Default: <code>pca_loadings</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>--uns_variance</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) In which .uns slot to store the resulting variance objects. Default: <code>pca_variance</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>--num_components</code></td>
+<td style="text-align: left;"><code>integer</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Number of principal components to compute. Defaults to 50, or 1 - minimum dimension size of selected representation.</td>
+</tr>
+</tbody>
+</table>
+`,`
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 7%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>--input</code></td>
+<td style="text-align: left;"><code>file</code></td>
+<td style="text-align: left;">A normalized dataset.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>--input_layer</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Which layer to use as input. Default: <code>normalized</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>--output</code></td>
+<td style="text-align: left;"><code>file</code></td>
+<td style="text-align: left;">(<em>Output</em>) A normalised dataset with a PCA embedding and HVG selection.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>--var_hvg</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) In which .var slot to store whether a feature is considered to be hvg. Default: <code>hvg</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>--var_hvg_score</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) In which .var slot to store the gene variance score (normalized dispersion). Default: <code>hvg_score</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>--num_features</code></td>
+<td style="text-align: left;"><code>integer</code></td>
+<td style="text-align: left;">(<em>Optional</em>) The number of HVG to select. Default: <code>1000</code>.</td>
+</tr>
+</tbody>
+</table>
+`,`
+<table>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 4%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>--input</code></td>
+<td style="text-align: left;"><code>file</code></td>
+<td style="text-align: left;">A normalised dataset with a PCA embedding.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>--input_layer</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Which layer to use as input. Default: <code>normalized</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>--output</code></td>
+<td style="text-align: left;"><code>file</code></td>
+<td style="text-align: left;">(<em>Output</em>) A normalised data with a PCA embedding, HVG selection and a kNN graph.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>--key_added</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) The neighbors data is added to <code>.uns[key_added]</code>, distances are stored in <code>.obsp[key_added+'_distances']</code> and connectivities in <code>.obsp[key_added+'_connectivities']</code>. Default: <code>knn</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>--num_neighbors</code></td>
+<td style="text-align: left;"><code>integer</code></td>
+<td style="text-align: left;">(<em>Optional</em>) The size of local neighborhood (in terms of number of neighboring data points) used for manifold approximation. Default: <code>15</code>.</td>
+</tr>
+</tbody>
+</table>
+`,`
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 1%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Slot</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["dataset_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Identifier for the dataset from which the cell data is derived, useful for tracking and referencing purposes.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["assay"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Type of assay used to generate the cell data, indicating the methodology or technique employed.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["assay_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Experimental Factor Ontology (<code>EFO:</code>) term identifier for the assay, providing a standardized reference to the assay type.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["cell_type"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Classification of the cell type based on its characteristics and function within the tissue or organism.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["cell_type_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Cell Ontology (<code>CL:</code>) term identifier for the cell type, offering a standardized reference to the specific cell classification.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["development_stage"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Stage of development of the organism or tissue from which the cell is derived, indicating its maturity or developmental phase.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["development_stage_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the developmental stage, providing a standardized reference to the organism’s developmental phase. If the organism is human (<code>organism_ontology_term_id == 'NCBITaxon:9606'</code>), then the Human Developmental Stages (<code>HsapDv:</code>) ontology is used. If the organism is mouse (<code>organism_ontology_term_id == 'NCBITaxon:10090'</code>), then the Mouse Developmental Stages (<code>MmusDv:</code>) ontology is used. Otherwise, the Uberon (<code>UBERON:</code>) ontology is used.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["disease"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Information on any disease or pathological condition associated with the cell or donor.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["disease_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the disease, enabling standardized disease classification and referencing. Must be a term from the Mondo Disease Ontology (<code>MONDO:</code>) ontology term, or <code>PATO:0000461</code> from the Phenotype And Trait Ontology (<code>PATO:</code>).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["donor_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Identifier for the donor from whom the cell sample is obtained.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["is_primary_data"]</code></td>
+<td style="text-align: left;"><code>boolean</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Indicates whether the data is primary (directly obtained from experiments) or has been computationally derived from other primary data.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["organism"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Organism from which the cell sample is obtained.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["organism_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the organism, providing a standardized reference for the organism. Must be a term from the NCBI Taxonomy Ontology (<code>NCBITaxon:</code>) which is a child of <code>NCBITaxon:33208</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["self_reported_ethnicity"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ethnicity of the donor as self-reported, relevant for studies considering genetic diversity and population-specific traits.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["self_reported_ethnicity_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the self-reported ethnicity, providing a standardized reference for ethnic classifications. If the organism is human (<code>organism_ontology_term_id == 'NCBITaxon:9606'</code>), then the Human Ancestry Ontology (<code>HANCESTRO:</code>) is used.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["sex"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Biological sex of the donor or source organism, crucial for studies involving sex-specific traits or conditions.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["sex_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the biological sex, ensuring standardized classification of sex. Only <code>PATO:0000383</code>, <code>PATO:0000384</code> and <code>PATO:0001340</code> are allowed.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["suspension_type"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Type of suspension or medium in which the cells were stored or processed, important for understanding cell handling and conditions.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["tissue"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Specific tissue from which the cells were derived, key for context and specificity in cell studies.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["tissue_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the tissue, providing a standardized reference for the tissue type. For organoid or tissue samples, the Uber-anatomy ontology (<code>UBERON:</code>) is used. The term ids must be a child term of <code>UBERON:0001062</code> (anatomical entity). For cell cultures, the Cell Ontology (<code>CL:</code>) is used. The term ids cannot be <code>CL:0000255</code>, <code>CL:0000257</code> or <code>CL:0000548</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["tissue_general"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) General category or classification of the tissue, useful for broader grouping and comparison of cell data.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["tissue_general_ontology_term_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Ontology term identifier for the general tissue category, aiding in standardizing and grouping tissue types. For organoid or tissue samples, the Uber-anatomy ontology (<code>UBERON:</code>) is used. The term ids must be a child term of <code>UBERON:0001062</code> (anatomical entity). For cell cultures, the Cell Ontology (<code>CL:</code>) is used. The term ids cannot be <code>CL:0000255</code>, <code>CL:0000257</code> or <code>CL:0000548</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["batch"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) A batch identifier. This label is very context-dependent and may be a combination of the tissue, assay, donor, etc.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obs["soma_joinid"]</code></td>
+<td style="text-align: left;"><code>integer</code></td>
+<td style="text-align: left;">(<em>Optional</em>) If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the cell.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obs["size_factors"]</code></td>
+<td style="text-align: left;"><code>double</code></td>
+<td style="text-align: left;">(<em>Optional</em>) The size factors created by the normalisation method, if any.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>var["feature_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Unique identifier for the feature, usually a ENSEMBL gene id.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>var["feature_name"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">A human-readable name for the feature, usually a gene symbol.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>var["soma_joinid"]</code></td>
+<td style="text-align: left;"><code>integer</code></td>
+<td style="text-align: left;">(<em>Optional</em>) If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>var["hvg"]</code></td>
+<td style="text-align: left;"><code>boolean</code></td>
+<td style="text-align: left;">Whether or not the feature is considered to be a ‘highly variable gene’.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>var["hvg_score"]</code></td>
+<td style="text-align: left;"><code>double</code></td>
+<td style="text-align: left;">A score for the feature indicating how highly variable it is.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obsm["X_pca"]</code></td>
+<td style="text-align: left;"><code>double</code></td>
+<td style="text-align: left;">The resulting PCA embedding.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>obsp["knn_distances"]</code></td>
+<td style="text-align: left;"><code>double</code></td>
+<td style="text-align: left;">K nearest neighbors distance matrix.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>obsp["knn_connectivities"]</code></td>
+<td style="text-align: left;"><code>double</code></td>
+<td style="text-align: left;">K nearest neighbors connectivities matrix.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>varm["pca_loadings"]</code></td>
+<td style="text-align: left;"><code>double</code></td>
+<td style="text-align: left;">The PCA loadings matrix.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>layers["counts"]</code></td>
+<td style="text-align: left;"><code>integer</code></td>
+<td style="text-align: left;">Raw counts.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>layers["normalized"]</code></td>
+<td style="text-align: left;"><code>double</code></td>
+<td style="text-align: left;">Normalised expression values.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uns["dataset_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">A unique identifier for the dataset. This is different from the <code>obs.dataset_id</code> field, which is the identifier for the dataset from which the cell data is derived.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uns["dataset_name"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">A human-readable name for the dataset.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uns["dataset_url"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Link to the original source of the dataset.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uns["dataset_reference"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) Bibtex reference of the paper in which the dataset was published.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uns["dataset_summary"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">Short description of the dataset.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uns["dataset_description"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">Long description of the dataset.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uns["dataset_organism"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">(<em>Optional</em>) The organism of the sample in the dataset.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uns["normalization_id"]</code></td>
+<td style="text-align: left;"><code>string</code></td>
+<td style="text-align: left;">Which normalization was used.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>uns["pca_variance"]</code></td>
+<td style="text-align: left;"><code>double</code></td>
+<td style="text-align: left;">The PCA variance objects.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uns["knn"]</code></td>
+<td style="text-align: left;"><code>object</code></td>
+<td style="text-align: left;">Supplementary K nearest neighbors data.</td>
+</tr>
+</tbody>
+</table>
+`,`
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 6%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>--input</code></td>
+<td style="text-align: left;"><code>file</code></td>
+<td style="text-align: left;">A dataset processed by the common dataset processing pipeline.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>--input_mod2</code></td>
+<td style="text-align: left;"><code>file</code></td>
+<td style="text-align: left;">(<em>Optional</em>) A dataset processed by the common dataset processing pipeline.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>--output</code></td>
+<td style="text-align: left;"><code>file</code></td>
+<td style="text-align: left;">(<em>Output</em>) A dataset processed by the common dataset processing pipeline.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>--output_mod2</code></td>
+<td style="text-align: left;"><code>file</code></td>
+<td style="text-align: left;">(<em>Optional, Output</em>) A dataset processed by the common dataset processing pipeline.</td>
+</tr>
+</tbody>
+</table>
+`];
+
+The dataset processing pipeline uses dataset loaders to create raw
+dataset files
+(<a href="#fig-dataset-workflow" class="quarto-xref">Figure 1</a>). The
+raw dataset files are then processed to generate common dataset files.
+Common dataset files are used in one or more tasks.
+
+<div id="fig-dataset-workflow">
+
+![](src-datasets_files/figure-markdown_strict/mermaid-figure-1.png)
+
+Figure 1: Overview of the dataset processing workflow. *Legend: Grey
+rectangles are AnnData .h5ad files, purple rhomboids are Viash
+components.*
+
+</div>
+
+## Directory structure
+
+-   **Dataset file and component formats** (`src/datasets/api`): This
+    folder contains specifications for dataset file formats and
+    component interfaces. This documentation page was generated mostly
+    by reading in these files.
+
+-   **Dataset loader** (`src/datasets/loaders`): This folder contains
+    components to load and format datasets for various sources.
+
+-   **Dataset normalization** (`src/datasets/normalization`): This
+    folder contains various dataset normalization methods.
+
+-   **Dataset processors** (`src/datasets/processors`): This folder
+    contains components for processing datasets, such as computing a
+    KNN, PCA, HVG or subsetting.
+
+-   **Resource generation scripts** (`src/common/resources_scripts`):
+    This folder contains scripts for generating the datasets using the
+    dataset loaders, normalization methods and processors.
+
+-   **Test resource generation scripts**
+    (`src/common/resources_test_scripts`): This folder contains scripts
+    for generating test resources.
+
+## Component type: Dataset loader
+
+Path:
+[`src/datasets/loaders`](https://github.com/openproblems-bio/openproblems/tree/main/src/datasets/loaders)
+
+A component which generates a “Common dataset”.
+
+Arguments:
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[0] }} />
+
+``` text
+Warning: Unknown or uninitialised column: `file_type`.
+```
+
+## File format: Raw dataset
+
+An unprocessed dataset as output by a dataset loader.
+
+Example file: `resources_test/common/pancreas/raw.h5ad`
+
+Description:
+
+This dataset contains raw counts and metadata as output by a dataset
+loader.
+
+The format of this file is derived from the [CELLxGENE schema
+v4.0.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/4.0.0/schema.md).
+
+Format:
+
+``` text
+AnnData object
+ obs: 'dataset_id', 'assay', 'assay_ontology_term_id', 'cell_type', 'cell_type_ontology_term_id', 'development_stage', 'development_stage_ontology_term_id', 'disease', 'disease_ontology_term_id', 'donor_id', 'is_primary_data', 'organism', 'organism_ontology_term_id', 'self_reported_ethnicity', 'self_reported_ethnicity_ontology_term_id', 'sex', 'sex_ontology_term_id', 'suspension_type', 'tissue', 'tissue_ontology_term_id', 'tissue_general', 'tissue_general_ontology_term_id', 'batch', 'soma_joinid'
+ var: 'feature_id', 'feature_name', 'soma_joinid'
+ layers: 'counts'
+ uns: 'dataset_id', 'dataset_name', 'dataset_url', 'dataset_reference', 'dataset_summary', 'dataset_description', 'dataset_organism'
+```
+
+Slot description:
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[1] }} />
+
+## Component type: Dataset normalization
+
+Path:
+[`src/datasets/normalization`](https://github.com/openproblems-bio/openproblems/tree/main/src/datasets/normalization)
+
+A normalization method which processes the raw counts into a normalized
+dataset.
+
+Arguments:
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[2] }} />
+
+``` text
+Warning: Unknown or uninitialised column: `file_type`.
+```
+
+## File format: Normalized dataset
+
+A normalized dataset
+
+Example file: `resources_test/common/pancreas/normalized.h5ad`
+
+Description:
+
+This dataset contains raw counts and metadata as output by a dataset
+loader.
+
+The format of this file is derived from the [CELLxGENE schema
+v4.0.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/4.0.0/schema.md).
+
+Format:
+
+``` text
+AnnData object
+ obs: 'dataset_id', 'assay', 'assay_ontology_term_id', 'cell_type', 'cell_type_ontology_term_id', 'development_stage', 'development_stage_ontology_term_id', 'disease', 'disease_ontology_term_id', 'donor_id', 'is_primary_data', 'organism', 'organism_ontology_term_id', 'self_reported_ethnicity', 'self_reported_ethnicity_ontology_term_id', 'sex', 'sex_ontology_term_id', 'suspension_type', 'tissue', 'tissue_ontology_term_id', 'tissue_general', 'tissue_general_ontology_term_id', 'batch', 'soma_joinid', 'size_factors'
+ var: 'feature_id', 'feature_name', 'soma_joinid'
+ layers: 'counts', 'normalized'
+ uns: 'dataset_id', 'dataset_name', 'dataset_url', 'dataset_reference', 'dataset_summary', 'dataset_description', 'dataset_organism', 'normalization_id'
+```
+
+Slot description:
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[3] }} />
+
+## Component type: PCA
+
+Path:
+[`src/datasets/processors`](https://github.com/openproblems-bio/openproblems/tree/main/src/datasets/processors)
+
+Computes a PCA embedding of the normalized data.
+
+Arguments:
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[4] }} />
+
+## Component type: HVG
+
+Path:
+[`src/datasets/processors`](https://github.com/openproblems-bio/openproblems/tree/main/src/datasets/processors)
+
+Computes the highly variable genes scores.
+
+Arguments:
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[5] }} />
+
+## Component type: KNN
+
+Path:
+[`src/datasets/processors`](https://github.com/openproblems-bio/openproblems/tree/main/src/datasets/processors)
+
+Computes the k-nearest-neighbours for each cell.
+
+Arguments:
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[6] }} />
+
+``` text
+Warning: Unknown or uninitialised column: `file_type`.
+```
+
+## File format: Common dataset
+
+A dataset processed by the common dataset processing pipeline.
+
+Example file: `resources_test/common/pancreas/dataset.h5ad`
+
+Description:
+
+This dataset contains both raw counts and normalized data matrices, as
+well as a PCA embedding, HVG selection and a kNN graph.
+
+Format:
+
+``` text
+AnnData object
+ obs: 'dataset_id', 'assay', 'assay_ontology_term_id', 'cell_type', 'cell_type_ontology_term_id', 'development_stage', 'development_stage_ontology_term_id', 'disease', 'disease_ontology_term_id', 'donor_id', 'is_primary_data', 'organism', 'organism_ontology_term_id', 'self_reported_ethnicity', 'self_reported_ethnicity_ontology_term_id', 'sex', 'sex_ontology_term_id', 'suspension_type', 'tissue', 'tissue_ontology_term_id', 'tissue_general', 'tissue_general_ontology_term_id', 'batch', 'soma_joinid', 'size_factors'
+ var: 'feature_id', 'feature_name', 'soma_joinid', 'hvg', 'hvg_score'
+ obsm: 'X_pca'
+ obsp: 'knn_distances', 'knn_connectivities'
+ varm: 'pca_loadings'
+ layers: 'counts', 'normalized'
+ uns: 'dataset_id', 'dataset_name', 'dataset_url', 'dataset_reference', 'dataset_summary', 'dataset_description', 'dataset_organism', 'normalization_id', 'pca_variance', 'knn'
+```
+
+Slot description:
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[7] }} />
+
+## Component type: Subset
+
+Path:
+[`src/datasets/processors`](https://github.com/openproblems-bio/openproblems/tree/main/src/datasets/processors)
+
+Sample cells and genes randomly.
+
+Arguments:
+
+<div dangerouslySetInnerHTML={{ __html: quartoRawHtml[8] }} />
