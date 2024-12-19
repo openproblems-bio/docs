@@ -16,6 +16,10 @@ jobs:
       BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
     
     steps:
+      - name: install linux dependencies
+        run: |
+          apt-get install libfontconfig1-dev
+          
       - uses: actions/checkout@v4
         with:
           submodules: recursive
