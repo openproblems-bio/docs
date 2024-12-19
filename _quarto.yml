@@ -2,7 +2,7 @@ project:
   output-dir: _docs
 
 format:
-  gfm:
+  docusaurus-md:
     toc: true
     fig-format: svg
 execute:
