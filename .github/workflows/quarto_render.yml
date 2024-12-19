@@ -18,8 +18,8 @@ jobs:
     steps:
       - name: install linux dependencies
         run: |
-          apt-get install libfontconfig1-dev
-          
+          sudo apt-get install libfontconfig1-dev
+
       - uses: actions/checkout@v4
         with:
           submodules: recursive
