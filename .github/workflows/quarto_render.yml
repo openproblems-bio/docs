@@ -71,13 +71,13 @@ jobs:
       - name: Clean up
         shell: bash -l {0}
         run: |
-          rm -rf !(_docs)
-          rm .gitignore !(_docs)
-          rm -rf .quarto !(_docs)
-          rm .gitmodules !(_docs)
-          rm .renvignore !(_docs)
-          rm .Rprofile !(_docs)
-          rm -rf .github !(_docs)
+          rm -rf !("_docs")
+          rm .gitignore !("_docs")
+          rm -rf .quarto !("_docs")
+          rm .gitmodules !("_docs")
+          rm .renvignore !("_docs")
+          rm .Rprofile !("_docs")
+          rm -rf .github !("_docs")
           mv _docs/* .
           rm -rf _docs
     
