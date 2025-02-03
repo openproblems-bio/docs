@@ -4,24 +4,35 @@
 library(purrr, warn.conflicts = FALSE)
 library(dplyr, warn.conflicts = FALSE)
 
-listing <- function(dir, pattern) {
+# search for qmd files in a directory
+listing <- function(
+  dir = ".", 
+  pattern = "^([^/_][^/]*|[^/_][^/]*/index)\\.qmd$"
+) {
   qmd_files <- list.files(
     dir,
     recursive = TRUE
   ) |>
     keep(~grepl(pattern, .)) |>
-    discard(~grepl("^_", .))
+    discard(~ . == "index.qmd")
 
-  df <- map_dfr(qmd_files, function(file) {
-    data <- yaml::read_yaml(file)
-    for (col in names(data)) {
-      if (length(data[[col]]) != 1) {
-        data[[col]] <- list(data[[col]])
+  df <- map_dfr(file.path(dir, qmd_files), function(file) {
+    tryCatch({
+      lines <- readr::read_lines(file)
+      yamlText <- lines[seq_len(which(lines == "---")[2] - 1)]
+      data <- yaml::yaml.load(yamlText)
+      for (col in names(data)) {
+        if (length(data[[col]]) != 1) {
+          data[[col]] <- list(data[[col]])
+        }
       }
-    }
-    df_row <- as.data.frame(data)
-    df_row$path <- file
-    df_row
+      df_row <- as.data.frame(data)
+      df_row$path <- gsub("\\.qmd", "", file)
+      df_row
+    }, error = function(e) {
+      message("Error reading ", file, ": ", e$message)
+      return(NULL)
+    })
   })
   
   df$description <- df$description %||% ""
@@ -29,7 +40,7 @@ listing <- function(dir, pattern) {
 
   df |>
     arrange(order, title, path) |>
-    mutate(str = glue::glue("* [{title}]({path}){ifelse(description != '', paste0(': ', description), '')}")) |>
+    mutate(str = glue::glue("* [**{title}**]({path}){ifelse(description != '', paste0(': ', description), '')}")) |>
     pull(str)
 }
 ```
