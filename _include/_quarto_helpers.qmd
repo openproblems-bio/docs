@@ -9,7 +9,8 @@ listing <- function(dir, pattern) {
     dir,
     recursive = TRUE
   ) |>
-    keep(~grepl(pattern, .))
+    keep(~grepl(pattern, .)) |>
+    discard(~grepl("^_", .))
 
   df <- map_dfr(qmd_files, function(file) {
     data <- yaml::read_yaml(file)

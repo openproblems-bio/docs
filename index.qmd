@@ -3,7 +3,7 @@ title: Documentation
 order: 1
 ---
 
-{{< /_include/_quarto_helpers.qmd >}}
+{{< include _include/_quarto_helpers.qmd >}}
 
 Welcome to the OpenProblems documentation!
 
@@ -11,7 +11,7 @@ OpenProblems is a framework for machine learning scientists, computational biolo
 
 This documentation provides an overview of the framework and how to contribute to it. It is organized into the following chapters: 
 
-```{r chapters, include=FALSE, output="asis"}
+```{r chapters, echo=FALSE, results='asis', warning=FALSE, message=FALSE, error=FALSE}
 listing(".", "^[^/]+/index.qmd$")
 ```
 
