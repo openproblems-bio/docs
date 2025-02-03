@@ -1,0 +1,34 @@
+```{r include=FALSE}
+# contents is a glob, e.g. "./*/index.qmd"
+# use it to list all files
+library(purrr, warn.conflicts = FALSE)
+library(dplyr, warn.conflicts = FALSE)
+
+listing <- function(dir, pattern) {
+  qmd_files <- list.files(
+    dir,
+    recursive = TRUE
+  ) |>
+    keep(~grepl(pattern, .))
+
+  df <- map_dfr(qmd_files, function(file) {
+    data <- yaml::read_yaml(file)
+    for (col in names(data)) {
+      if (length(data[[col]]) != 1) {
+        data[[col]] <- list(data[[col]])
+      }
+    }
+    df_row <- as.data.frame(data)
+    df_row$path <- file
+    df_row
+  })
+  
+  df$description <- df$description %||% ""
+  df$order <- df$order %||% 0
+
+  df |>
+    arrange(order, title, path) |>
+    mutate(str = glue::glue("* [{title}]({path}){ifelse(description != '', paste0(': ', description), '')}")) |>
+    pull(str)
+}
+```
