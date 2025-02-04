@@ -16,7 +16,7 @@ In the following we will show examples for both Python and R.
 Note that the Task template repo is used throughout the guide, so make sure to replace any occurrences of `"task_template"` with your task of interest.
 
 :::{.callout-tip}
-Make sure you have followed the ["Getting started"](getting_started.qmd) guide.
+Make sure you have followed the ["Getting started"](getting_started) guide.
 :::
 
 ## Step 1:  Create a new component
@@ -237,7 +237,7 @@ viash test src/methods/logistic_regression/config.vsh.yaml
 ```
 </details>
 
-Visit ["Run tests"](run_tests.qmd) for more information on running unit tests and how to interpret common error messages.
+Visit ["Run tests"](run_tests) for more information on running unit tests and how to interpret common error messages.
 
 You can also run your component on local files using the `viash run` command. For example:
 
@@ -250,5 +250,5 @@ viash run src/methods/my_python_method/config.vsh.yaml -- \
 
 ## Next steps
 
-If your component works, please [create a pull request](../create_component/create_pull_request.qmd).
+If your component works, please [create a pull request](../create_component/create_pull_request).
 

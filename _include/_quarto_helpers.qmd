@@ -3,6 +3,7 @@
 # use it to list all files
 library(purrr, warn.conflicts = FALSE)
 library(dplyr, warn.conflicts = FALSE)
+library(stringr, warn.conflicts = FALSE)
 
 # search for qmd files in a directory
 listing <- function(
@@ -16,7 +17,8 @@ listing <- function(
     keep(~grepl(pattern, .)) |>
     discard(~ . == "index.qmd")
 
-  df <- map_dfr(file.path(dir, qmd_files), function(file) {
+  df <- map_dfr(qmd_files, function(qmd_file) {
+    file <- file.path(dir, qmd_file)
     tryCatch({
       lines <- readr::read_lines(file)
       yamlText <- lines[seq_len(which(lines == "---")[2] - 1)]
@@ -27,7 +29,9 @@ listing <- function(
         }
       }
       df_row <- as.data.frame(data)
-      df_row$path <- gsub("\\.qmd", "", file)
+      df_row$path <- file |>
+        str_replace_all("/index\\.qmd", "") |>
+        str_replace_all("\\.qmd", "")
       df_row
     }, error = function(e) {
       message("Error reading ", file, ": ", e$message)

@@ -177,4 +177,4 @@ Now update the _viash.yaml file in the root of the task repository with the foll
 
 ## Ready, set, go!
 
-You are now well-equipped to begin [designing the API](design_api.qmd) for the new benchmarking task.
+You are now well-equipped to begin [designing the API](design_api) for the new benchmarking task.

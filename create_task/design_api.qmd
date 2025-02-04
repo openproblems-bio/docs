@@ -27,10 +27,10 @@ The [dimensionality reduction](https://github.com/openproblems-bio/task_dimensio
 
 Having a formally defined API ensures consistency and interoperability across different components of your task. This makes it easier for others to contribute and build upon your work. Not only that, but creating API files (partially) automates the following steps:
 
-* Creating new [methods](../create_component/add_a_method.qmd) and [metrics](../create_component/add_a_metric.qmd) using the `create_component` scripts.
-* [Automated testing](../create_component/run_tests.qmd) of components.
+* Creating new [methods](../create_component/add_a_method) and [metrics](../create_component/add_a_metric) using the `create_component` scripts.
+* [Automated testing](../create_component/run_tests) of components.
 * Generating [reference documentation](../reference/).
-* Implement a component for [processing the common datasets](dataset_processor.qmd).
+* Implement a component for [processing the common datasets](dataset_processor).
 
 # How?
 

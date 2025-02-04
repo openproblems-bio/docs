@@ -33,7 +33,7 @@ The Dataset processor, like any component in OpenProblems, is a {{< glossary Via
 
 # Step 1: Create the Viash config
 
-Start by creating the Viash config. Luckily, we already created its file format and argument list in the [previous section](design_api.qmd), so we can just import the interface using the `__merge__` field:
+Start by creating the Viash config. Luckily, we already created its file format and argument list in the [previous section](design_api), so we can just import the interface using the `__merge__` field:
 
 
 :::{.panel-tabset group="language"}
