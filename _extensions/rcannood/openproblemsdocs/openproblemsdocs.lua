@@ -9,7 +9,7 @@ return {
     -- wrap all codeblocks with class="mermaid" in a Mermaid element
     CodeBlock = function(el)
       if el.attr.classes:includes("mermaid") then
-        local escapedTest = el.text:gsub("`", "\\`"):gsub("&#10;", "\n"):gsub("&#10;", "\n")
+        local escapedTest = el.text:gsub("`", "\\`")
         return pandoc.RawBlock("html", "<MermaidDiagram chart={`\n" .. escapedTest .. "`} />")
       end
     end,

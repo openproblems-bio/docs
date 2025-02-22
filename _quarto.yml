@@ -8,6 +8,7 @@ format:
     bibliography: library.bib
     output-ext: mdx
     glossary: _glossary.md
+    variant: "+yaml_metadata_block"
 
 execute:
   freeze: auto
