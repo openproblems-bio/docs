@@ -2,16 +2,20 @@ project:
   output-dir: _docs
 
 format:
-  gfm:
-    toc: false
-    fig-format: svg
+  custommdx-md:
     bibliography: library.bib
-    output-ext: mdx
     glossary: _glossary.md
-    variant: "+yaml_metadata_block"
+
+  # gfm:
+  #   toc: false
+  #   fig-format: svg
+  #   bibliography: library.bib
+  #   output-ext: mdx
+  #   glossary: _glossary.md
+  #   variant: "+yaml_metadata_block"
 
 execute:
   freeze: auto
 
-filters:
-  - openproblemsdocs
+# filters:
+#   - custommdx
