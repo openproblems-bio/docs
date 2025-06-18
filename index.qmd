@@ -1,25 +1,169 @@
 ---
-title: Documentation
-order: 1
+title: "Quarto Feature Test"
+order: 2
 ---
 
-{{< include /_include/_quarto_helpers.qmd >}}
-
-Welcome to the OpenProblems documentation!
-
-OpenProblems is a framework for machine learning scientists, computational biologists, and single-cell data analysts to benchmark and compare single-cell omics methods on a variety of tasks. We believe that improving reproducibility and transparency in research will accelerate progress in single-cell omics.
-
-This documentation provides an overview of the framework and how to contribute to it. It is organized into the following chapters: 
-
-```{r chapters, echo=FALSE, results='asis', warning=FALSE, message=FALSE, error=FALSE}
-listing()
+```{r include=FALSE}
 ```
 
-We encourage everyone who uses OpenProblems to contribute to the framework in any way they can. This can include submitting a pull request to improve the documentation, answering queries on the issue tracker, investigating bugs, reviewing other developers' pull requests, or simply reporting issues and giving a "thumbs up" to relevant issues. 
+This document tests various Quarto features to ensure they render correctly. It focuses on callouts, grouped tabsets, figures, tables, Mermaid diagrams, and code blocks (with and without execution).
 
-One simple but important way to contribute is to spread the word about the library by referencing it from your blog and articles, linking to it from your website, or starring it on GitHub to show that you use it. This not only helps us gain more visibility but also encourages others to try out the library and contribute to it. 
+## Callouts
 
-[![](images/stargazers.png){width=500px}](https://github.com/openproblems-bio/openproblems/stargazers)
+We will test different types of callouts.
 
-Finally, we want to emphasize that OpenProblems is an inclusive community and we expect all members to adhere to our [code of conduct](fundamentals/philosophy#inclusiveness). We hope that this documentation helps you get started with OpenProblems and we look forward to your contributions.
+::: {.callout-note}
+This is a *standard note callout*. It should render as a note.
+:::
 
+::: {.callout-tip}
+This is a **tip callout**. It should render as a tip, distinguishable from a note.
+:::
+
+## Grouped Tabsets
+
+These tests ensure grouped tabsets render correctly and are interactive.
+
+::: {.panel-tabset group="test-tabset"}
+
+## Tab 1
+
+Foo
+
+## Tab 2
+
+Bar
+
+## Tab 3
+
+Baz
+
+:::
+
+And another one
+
+::: {.panel-tabset group="test-tabset"}
+
+## Tab 1
+
+Foo
+
+## Tab 2
+
+Bar
+
+## Tab 3
+
+Baz
+
+:::
+
+## Figures {#sec-figures}
+
+Figure [@fig-complex] is an example plot with multiple lines and a legend.
+
+```{r}
+#| label: fig-complex
+#| fig-cap: "An **example** plot"
+#| fig-alt: "A plot showing multiple lines and a legend."
+#| fig-width: 8
+#| fig-height: 5
+
+library(ggplot2)
+
+data <- data.frame(
+  x = 1:10,
+  y1 = 1:10,
+  y2 = 10:1
+)
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = y1, color = "Line 1")) +
+  geom_line(aes(y = y2, color = "Line 2")) +
+  labs(x = "X", y = "Y") +
+  theme_minimal()
+```
+
+## Tables
+
+Table [@tbl-complex] is a complex table with multiple columns and a caption.
+
+```{r}
+#| label: tbl-complex
+#| tbl-cap: "An **example** table"
+#| tbl-colwidths: [15,35,25,25]
+
+library(knitr)
+
+data <- data.frame(
+  Category = c("A", "B", "C", "D"),
+  Description = c("Longer description for A", "Description for B", "Short description", "Another longer description for D"),
+  Value1 = c(12.345, 6.789, 1.234, 9.876),
+  Value2 = c(100, 25, 500, 75)
+)
+
+kable(data, "pipe", align = c("l", "l", "r", "r"))
+```
+
+## Mermaid Diagrams
+
+Figure [@fig-mermaid] is a simple flowchart created using Mermaid.
+
+```{mermaid}
+%%| fig-cap: "An **example** mermaid diagram"
+%%| label: fig-mermaid
+graph LR
+    A[Start] --> B{Decision};
+    B -- Yes --> C[Process 1];
+    B -- No --> D[Process 2];
+    C --> E[End];
+    D --> E;
+```
+
+## Code Blocks
+
+### Code Block (No Execution)
+
+```python
+# This is a Python code block, but it won't be executed.
+def greet(name):
+  print(f"Hello, {name}!")
+
+greet("World")
+```
+
+### Code Block (With Execution)
+
+```{r}
+# This R code block will be executed.
+x <- 10
+y <- 5
+print(x + y)
+```
+
+## Comment
+
+This section should be empty, other than this sentence.
+
+<!-- This is a comment. -->
+
+## References
+
+Various references are tested here:
+
+* Figure: [@fig-complex]
+
+* Table: [@tbl-complex]
+
+* Section: [@sec-figures]
+
+* Citation: [@luecken2021neurips]
+
+* Citation with multiple authors: [@luecken2021neurips; @cannoodt2021viashfromscripts]
+
+* Citation with doi: [@10.1101/2023.11.28.568918]
+
+* Footnote: [^footnote-example]
+
+* URL: [OpenProblems](https://openproblems.bio)
+
+[^footnote-example]: This is a footnote.
