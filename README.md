@@ -1,6 +1,4 @@
----
-title: docs
----
+# docs
 
 ## Installation
 
