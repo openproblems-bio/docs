@@ -49,7 +49,6 @@ scripts/create_component/create_python_method.sh
 ```
 
 ``` text
-[notice] Checking if Docker image is available at 'ghcr.io/openproblems-bio/core/project/create_component:build_main'
 Check inputs
 Check language
 Check API file
@@ -652,11 +651,11 @@ Output
 <div dangerouslySetInnerHTML={{ __html: quartoRawHtml[23] }} />
 
 ``` text
-Running tests in temporary directory: '/tmp/viash_test_logistic_regression_17410533509347319749'
+Running tests in temporary directory: '/tmp/viash_test_logistic_regression_10156573100687519561'
 ====================================================================
-+/tmp/viash_test_logistic_regression_17410533509347319749/build_engine_environment/logistic_regression ---verbosity 6 ---setup cachedbuild ---engine docker
++/tmp/viash_test_logistic_regression_10156573100687519561/build_engine_environment/logistic_regression ---verbosity 6 ---setup cachedbuild ---engine docker
 [notice] Building container 'ghcr.io/openproblems-bio/task_template/methods/logistic_regression:test' with Dockerfile
-[info] docker build -t 'ghcr.io/openproblems-bio/task_template/methods/logistic_regression:test'  '/tmp/viash_test_logistic_regression_17410533509347319749/build_engine_environment' -f '/tmp/viash_test_logistic_regression_17410533509347319749/build_engine_environment/tmp/dockerbuild-logistic_regression-LkLO4K/Dockerfile'
+[info] docker build -t 'ghcr.io/openproblems-bio/task_template/methods/logistic_regression:test'  '/tmp/viash_test_logistic_regression_10156573100687519561/build_engine_environment' -f '/tmp/viash_test_logistic_regression_10156573100687519561/build_engine_environment/tmp/dockerbuild-logistic_regression-xtjcND/Dockerfile'
 #0 building with "default" instance using docker driver
 
 #1 [internal] load build definition from Dockerfile
@@ -670,28 +669,19 @@ Running tests in temporary directory: '/tmp/viash_test_logistic_regression_17410
 #3 transferring context: 2B done
 #3 DONE 0.0s
 
-#4 [1/2] FROM docker.io/openproblems/base_python:1.0.0@sha256:8f412fb68458fe21f891eee39cc7c92862f3a72542abb3d760d5d3b8585808b6
-#4 CACHED
+#4 [1/2] FROM docker.io/openproblems/base_python:1.0.0@sha256:4e79c3843064dc811cd6ea2d297470f10e0bdff788d50723f9ef6b549534cd2f
+#4 DONE 0.0s
 
 #5 [2/2] RUN pip install --upgrade pip &&   pip install --upgrade --no-cache-dir "scikit-learn"
-#5 0.466 Requirement already satisfied: pip in /usr/local/lib/python3.11/site-packages (24.3.1)
-#5 0.649 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable.It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-#5 1.050 Requirement already satisfied: scikit-learn in /usr/local/lib/python3.11/site-packages (1.6.0)
-#5 1.223 Requirement already satisfied: numpy>=1.19.5 in /usr/local/lib/python3.11/site-packages (from scikit-learn) (2.0.2)
-#5 1.224 Requirement already satisfied: scipy>=1.6.0 in /usr/local/lib/python3.11/site-packages (from scikit-learn) (1.14.1)
-#5 1.224 Requirement already satisfied: joblib>=1.2.0 in /usr/local/lib/python3.11/site-packages (from scikit-learn) (1.4.2)
-#5 1.225 Requirement already satisfied: threadpoolctl>=3.1.0 in /usr/local/lib/python3.11/site-packages (from scikit-learn) (3.5.0)
-#5 1.302 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable.It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-#5 DONE 1.5s
+#5 CACHED
 
 #6 exporting to image
-#6 exporting layers
-#6 exporting layers 2.0s done
-#6 writing image sha256:cbb252eab5141301825dde772ee1cfc3152957b814493cd59cd02cd9f6c2c274 done
+#6 exporting layers done
+#6 writing image sha256:d3ce16cda7f80845fe90aac2d6a8b4d16d68138ffba8c413690249af310e7e65 done
 #6 naming to ghcr.io/openproblems-bio/task_template/methods/logistic_regression:test done
-#6 DONE 2.0s
+#6 DONE 0.0s
 ====================================================================
-+/tmp/viash_test_logistic_regression_17410533509347319749/test_run_and_check_output/test_executable
++/tmp/viash_test_logistic_regression_10156573100687519561/test_run_and_check_output/test_executable
 >> Running test 'run'
 >> Checking whether input files exist
 >> Running script as test
@@ -708,7 +698,7 @@ Reading and checking output
     uns: 'dataset_id', 'method_id', 'normalization_id'
 All checks succeeded!
 ====================================================================
-+/tmp/viash_test_logistic_regression_17410533509347319749/test_check_config/test_executable
++/tmp/viash_test_logistic_regression_10156573100687519561/test_check_config/test_executable
 Load config data
 Check .namespace
 Check .info.type

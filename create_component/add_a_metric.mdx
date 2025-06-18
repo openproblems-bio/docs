@@ -48,6 +48,7 @@ scripts/create_component/create_python_metric.sh
 ```
 
 ``` text
+[notice] Checking if Docker image is available at 'ghcr.io/openproblems-bio/core/project/create_component:build_main'
 Check inputs
 Check language
 Check API file
@@ -636,11 +637,11 @@ Output
 <div dangerouslySetInnerHTML={{ __html: quartoRawHtml[23] }} />
 
 ``` text
-Running tests in temporary directory: '/tmp/viash_test_accuracy_17154484141876214312'
+Running tests in temporary directory: '/tmp/viash_test_accuracy_12213465875898796968'
 ====================================================================
-+/tmp/viash_test_accuracy_17154484141876214312/build_engine_environment/accuracy ---verbosity 6 ---setup cachedbuild ---engine docker
++/tmp/viash_test_accuracy_12213465875898796968/build_engine_environment/accuracy ---verbosity 6 ---setup cachedbuild ---engine docker
 [notice] Building container 'ghcr.io/openproblems-bio/task_template/metrics/accuracy:test' with Dockerfile
-[info] docker build -t 'ghcr.io/openproblems-bio/task_template/metrics/accuracy:test'  '/tmp/viash_test_accuracy_17154484141876214312/build_engine_environment' -f '/tmp/viash_test_accuracy_17154484141876214312/build_engine_environment/tmp/dockerbuild-accuracy-2a3g1L/Dockerfile'
+[info] docker build -t 'ghcr.io/openproblems-bio/task_template/metrics/accuracy:test'  '/tmp/viash_test_accuracy_12213465875898796968/build_engine_environment' -f '/tmp/viash_test_accuracy_12213465875898796968/build_engine_environment/tmp/dockerbuild-accuracy-M6boMs/Dockerfile'
 #0 building with "default" instance using docker driver
 
 #1 [internal] load build definition from Dockerfile
@@ -654,19 +655,28 @@ Running tests in temporary directory: '/tmp/viash_test_accuracy_1715448414187621
 #3 transferring context: 2B done
 #3 DONE 0.0s
 
-#4 [1/2] FROM docker.io/openproblems/base_python:1.0.0@sha256:8f412fb68458fe21f891eee39cc7c92862f3a72542abb3d760d5d3b8585808b6
-#4 DONE 0.0s
+#4 [1/2] FROM docker.io/openproblems/base_python:1.0.0@sha256:4e79c3843064dc811cd6ea2d297470f10e0bdff788d50723f9ef6b549534cd2f
+#4 CACHED
 
 #5 [2/2] RUN pip install --upgrade pip &&   pip install --upgrade --no-cache-dir "scikit-learn"
-#5 CACHED
+#5 0.415 Requirement already satisfied: pip in /usr/local/lib/python3.11/site-packages (25.1.1)
+#5 0.603 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#5 1.037 Requirement already satisfied: scikit-learn in /usr/local/lib/python3.11/site-packages (1.7.0)
+#5 1.214 Requirement already satisfied: numpy>=1.22.0 in /usr/local/lib/python3.11/site-packages (from scikit-learn) (2.2.6)
+#5 1.214 Requirement already satisfied: scipy>=1.8.0 in /usr/local/lib/python3.11/site-packages (from scikit-learn) (1.15.3)
+#5 1.215 Requirement already satisfied: joblib>=1.2.0 in /usr/local/lib/python3.11/site-packages (from scikit-learn) (1.5.1)
+#5 1.216 Requirement already satisfied: threadpoolctl>=3.1.0 in /usr/local/lib/python3.11/site-packages (from scikit-learn) (3.6.0)
+#5 1.303 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#5 DONE 1.5s
 
 #6 exporting to image
-#6 exporting layers done
-#6 writing image sha256:850f3e39b7b0f623cd1f3d557243f97b11d90cc929ed531e9a2cfd0fc70c230d done
+#6 exporting layers
+#6 exporting layers 1.9s done
+#6 writing image sha256:f1b422078298339eb3e4d3c8d94bedad5bf98975c582683638fa2d4a32a5e6bc done
 #6 naming to ghcr.io/openproblems-bio/task_template/metrics/accuracy:test done
-#6 DONE 0.0s
+#6 DONE 1.9s
 ====================================================================
-+/tmp/viash_test_accuracy_17154484141876214312/test_run_and_check_output/test_executable
++/tmp/viash_test_accuracy_12213465875898796968/test_run_and_check_output/test_executable
 >> Running test 'run'
 >> Checking whether input files exist
 >> Running script as test
@@ -681,7 +691,7 @@ Reading and checking output
     uns: 'dataset_id', 'method_id', 'metric_ids', 'metric_values', 'normalization_id'
 All checks succeeded!
 ====================================================================
-+/tmp/viash_test_accuracy_17154484141876214312/test_check_config/test_executable
++/tmp/viash_test_accuracy_12213465875898796968/test_check_config/test_executable
 Load config data
 Check .namespace
 Check .info.type
