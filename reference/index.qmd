@@ -2,8 +2,10 @@
 title: Reference
 description: Structured information about the OpenProblems project.
 order: 90
-listing:
-  template: ../../style/listing.ejs
-  type: default
-  contents: "*/index.qmd"
 ---
+
+{{< include /_include/_quarto_helpers.qmd >}}
+
+```{r chapters, echo=FALSE, results='asis', warning=FALSE, message=FALSE, error=FALSE}
+listing()
+```

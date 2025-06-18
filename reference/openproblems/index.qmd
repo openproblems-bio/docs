@@ -13,11 +13,11 @@ The main data flow of the pipeline is shown in @fig-dataflow. The common dataset
 
 ## Directory Structure
 
-* [`src/common`](src-common.qmd): This subdirectory contains helper components that helps with creating new components, unit testing other components, or managing task results.
-* [`src/datasets`](src-datasets.qmd): The dataset processing pipeline uses dataset loaders to create raw dataset files. The raw dataset files are then processed to generate common dataset files. Common dataset files are used in one or more tasks.
-* [`src/tasks/<task_id>`](src-task_id.qmd): Each task should contain a data processor (to transform common datasets into task-specific datasets), methods, control methods (for quality control), and metrics.
-* [`resources_test`](test-resources.qmd): This directory contains the test resources required for running unit tests on the Viash components
-* [`target`](target.qmd): This directory contains the artifacts built from the Viash components in the `src` directory.
+* [`src/common`](src-common): This subdirectory contains helper components that helps with creating new components, unit testing other components, or managing task results.
+* [`src/datasets`](src-datasets): The dataset processing pipeline uses dataset loaders to create raw dataset files. The raw dataset files are then processed to generate common dataset files. Common dataset files are used in one or more tasks.
+* [`src/tasks/<task_id>`](src-task_id): Each task should contain a data processor (to transform common datasets into task-specific datasets), methods, control methods (for quality control), and metrics.
+* [`resources_test`](test-resources): This directory contains the test resources required for running unit tests on the Viash components
+* [`target`](target): This directory contains the artifacts built from the Viash components in the `src` directory.
 
 
 ## Technology stack

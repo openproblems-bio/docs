@@ -2,8 +2,20 @@ project:
   output-dir: _docs
 
 format:
-  docusaurus-md:
-    toc: true
-    fig-format: svg
+  custommdx-md:
+    bibliography: library.bib
+    glossary: _glossary.md
+
+  # gfm:
+  #   toc: false
+  #   fig-format: svg
+  #   bibliography: library.bib
+  #   output-ext: mdx
+  #   glossary: _glossary.md
+  #   variant: "+yaml_metadata_block"
+
 execute:
   freeze: auto
+
+# filters:
+#   - custommdx

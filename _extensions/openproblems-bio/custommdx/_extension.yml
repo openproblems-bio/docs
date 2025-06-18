@@ -1,0 +1,25 @@
+title: Custom MDX
+author: OpenProblems
+contributes:
+  formats:
+    md:
+      output-ext: mdx
+      quarto-custom-format: custommdx-md
+      preserve-yaml: true
+      wrap: none
+      filters:
+        - at: post-render
+          path: custommdx_postrender.lua
+
+      variant: >-
+        gfm+pipe_tables+tex_math_dollars+header_attributes+raw_html
+        +all_symbols_escapable+backtick_code_blocks+fenced_code_blocks
+        +space_in_atx_header+intraword_underscores+lists_without_preceding_blankline
+        +shortcut_reference_links+footnotes+definition_lists+startnum
+
+      fig-width: 8
+      fig-height: 5
+      fig-format: svg
+
+      html-math-method: webtex
+

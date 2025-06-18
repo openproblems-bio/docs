@@ -7,7 +7,7 @@ engine: knitr
 {{< include /_include/_clone_repo_openproblems.qmd >}}
 {{< include /_include/_evaluate_code.qmd >}}
 
-A {{< glossary "dataset loader" >}} is used to generate one or more {{< glossary "raw dataset" label="raw datasets" >}}. A raw dataset is processed by the [Dataset preprocessing workflow](/reference/openproblems/src-datasets.qmd) to create a {{< glossary "common dataset" >}} that can be used by multiple benchmarking tasks.
+A {{< glossary "dataset loader" >}} is used to generate one or more {{< glossary "raw dataset" label="raw datasets" >}}. A raw dataset is processed by the [Dataset preprocessing workflow](/reference/openproblems/src-datasets) to create a {{< glossary "common dataset" >}} that can be used by multiple benchmarking tasks.
 
 This guide will show you how to create a new {{< glossary Viash >}} component to fetch or generate datasets.
 
@@ -21,7 +21,7 @@ Common datasets are created by generating raw datasets with a data loader and ru
 
 {{< include ../_figures/_project_structure_dataflow.qmd >}}
 
-See the [reference documentation](../reference/openproblems/src-datasets.qmd) for more information on how each of these steps works.
+See the [reference documentation](../reference/openproblems/src-datasets) for more information on how each of these steps works.
 
 ```{r setup-packages, include=FALSE}
 library(tidyverse)
@@ -78,9 +78,9 @@ platforms:
 HERE
 ```
 
-:::{.panel-tabset group="language"}
+<TabsCodeBlocks type="language">
 
-## Python
+:::{#Python}
 
 Contents of `src/datasets/loaders/myloader/config.vsh.yaml`:
 
@@ -88,7 +88,9 @@ Contents of `src/datasets/loaders/myloader/config.vsh.yaml`:
 src/datasets/loaders/myloader/config.vsh.yaml
 ```
 
-## R
+:::
+
+:::{#R}
 
 Contents of `src/datasets/loaders/myloader/config.vsh.yaml`:
 
@@ -114,7 +116,10 @@ platforms:
         packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3 ]
   - type: nextflow
 ```
+
 :::
+
+</TabsCodeBlocks>
 
 For more parameter options, refer to ["Parameters"](#parameters) section.
 
@@ -179,9 +184,9 @@ adata.write_h5ad(par["output"], compression="gzip")
 HERE
 ```
 
-:::{.panel-tabset group="language"}
+<TabsCodeBlocks type="language">
 
-## Python
+:::{#Python}
 
 Contents of `src/datasets/loaders/myloader/script.py`:
 
@@ -189,7 +194,9 @@ Contents of `src/datasets/loaders/myloader/script.py`:
 src/datasets/loaders/myloader/script.py
 ```
 
-## R
+:::
+
+:::{#R}
 
 Contents of `src/datasets/loaders/myloader/script.R`:
 
@@ -243,8 +250,9 @@ adata <- AnnData(
 # Write to file
 adata$write_h5ad(par[["output"]], compression = "gzip")
 ```
-
 :::
+
+</TabsCodeBlocks>
 
 ## Step 4: Run the component
 
@@ -284,9 +292,9 @@ arguments:
 
 You can then use the `n_obs` and `n_vars` values in the `par` object to get access to the runtime parameters:
 
-:::{.panel-tabset group="language"}
+<TabsCodeBlocks type="language">
 
-## Python
+:::{#Python}
 
 ```python
 obs = pd.DataFrame({
@@ -298,8 +306,8 @@ var = pd.DataFrame(
     index=[f"Gene_{i}" for i in range(100)]
 )
 ```
-
-## R
+:::
+:::{#R}
 
 ```r
 obs <- data.frame(
@@ -311,8 +319,9 @@ var <- data.frame(
   row.names = paste0("Gene_", seq_len(par$n_vars))
 )
 ```
-
 :::
+
+</TabsCodeBlocks>
 
 ## Format of a raw dataset object
 

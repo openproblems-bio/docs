@@ -1,0 +1,50 @@
+```{r include=FALSE}
+# contents is a glob, e.g. "./*/index.qmd"
+# use it to list all files
+library(purrr, warn.conflicts = FALSE)
+library(dplyr, warn.conflicts = FALSE)
+library(stringr, warn.conflicts = FALSE)
+
+# search for qmd files in a directory
+listing <- function(
+  dir = ".", 
+  pattern = "^([^/_][^/]*|[^/_][^/]*/index)\\.qmd$"
+) {
+  qmd_files <- list.files(
+    dir,
+    recursive = TRUE
+  ) |>
+    keep(~grepl(pattern, .)) |>
+    discard(~ . == "index.qmd")
+
+  df <- map_dfr(qmd_files, function(qmd_file) {
+    file <- file.path(dir, qmd_file)
+    tryCatch({
+      lines <- readr::read_lines(file)
+      yamlText <- lines[seq_len(which(lines == "---")[2] - 1)]
+      data <- yaml::yaml.load(yamlText)
+      for (col in names(data)) {
+        if (length(data[[col]]) != 1) {
+          data[[col]] <- list(data[[col]])
+        }
+      }
+      df_row <- as.data.frame(data)
+      df_row$path <- file |>
+        str_replace_all("/index\\.qmd", "") |>
+        str_replace_all("\\.qmd", "")
+      df_row
+    }, error = function(e) {
+      message("Error reading ", file, ": ", e$message)
+      return(NULL)
+    })
+  })
+  
+  df$description <- df$description %||% ""
+  df$order <- df$order %||% 0
+
+  df |>
+    arrange(order, title, path) |>
+    mutate(str = glue::glue("* [**{title}**]({path}){ifelse(description != '', paste0(': ', description), '')}")) |>
+    pull(str)
+}
+```

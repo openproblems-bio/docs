@@ -1372,7 +1372,7 @@
       "Package": "openproblems",
       "Version": "0.0.0.9000",
       "Source": "GitHub",
-      "Remotes": "openproblems.utils=local::../openproblems.utils",
+      "Remotes": "openproblems.utils=local::./_core",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "core",
@@ -1399,7 +1399,7 @@
       "RemoteSubdir": "packages/r/openproblems.docs",
       "RemoteRef": "main",
       "RemoteSha": "d6a34ca0ebcfabdeac7e4f2e070143b5190631a4",
-      "Remotes": "openproblems.utils=local::../openproblems.utils, openproblems=local::../openproblems",
+      "Remotes": "openproblems.utils=local::./_core, openproblems=local::../openproblems",
       "Requirements": [
         "R",
         "cli",

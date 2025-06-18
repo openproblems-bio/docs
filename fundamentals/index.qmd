@@ -2,8 +2,10 @@
 title: Fundamentals
 description: The main philosophy and key concepts of the project.
 order: 10
-listing:
-  template: ../../style/listing.ejs
-  type: default
-  contents: "./*.qmd"
 ---
+
+{{< include /_include/_quarto_helpers.qmd >}}
+
+```{r chapters, echo=FALSE, results='asis', warning=FALSE, message=FALSE, error=FALSE}
+listing()
+```
